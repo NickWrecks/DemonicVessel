@@ -46,9 +46,8 @@ public class DemonicVessel
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
+        // Register the Deferred Register to the mod event bus so things get registered
         BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
         MENU_TYPES.register(modEventBus);
@@ -72,7 +71,6 @@ public class DemonicVessel
 
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
