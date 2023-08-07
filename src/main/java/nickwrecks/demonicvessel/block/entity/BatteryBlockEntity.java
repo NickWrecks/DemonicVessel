@@ -22,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.util.Arrays;
+
 import static net.minecraft.world.level.block.DirectionalBlock.FACING;
 import static nickwrecks.demonicvessel.block.entity.ModBlockEntities.BATTERY_BLOCK_ENTITY;
 
@@ -38,7 +40,7 @@ public class BatteryBlockEntity extends BlockEntity {
     public static final ModelProperty<int[]> FACES_INPUT_STATUS = new ModelProperty<>();
 
     ///D-U-N-S-W-E
-    int[] inputStatus = {1, 0, 0, 0, 0, 0};
+    int[] inputStatus = {1, 1, 0, 1, 1, 1};
 
     private int counter;
     private static final Logger LOGGER = LogUtils.getLogger();
