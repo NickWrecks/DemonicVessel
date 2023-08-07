@@ -31,6 +31,6 @@ public class ModBlockstateProvider extends BlockStateProvider {
                 .parent(models().getExistingFile(mcLoc("cube")))
                 .customLoader((blockModelBuilder, helper) -> new CustomLoaderBuilder<BlockModelBuilder>(BATTERY_LOADER,blockModelBuilder,helper) {})
                 .end();
-        simpleBlock(ModBlocks.BATTERY_BLOCK.get(),batteryModel);
+        directionalBlock(ModBlocks.BATTERY_BLOCK.get(),batteryModel);
     }
 }
