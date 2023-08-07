@@ -29,6 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Function;
 
+import static nickwrecks.demonicvessel.client.ClientTools.directionalFaceQuad;
 import static nickwrecks.demonicvessel.client.ClientTools.v;
 
 
@@ -66,6 +67,7 @@ public class BatteryBakedModel implements IDynamicBakedModel {
     private void generateQuadCache() {
 
         TextureAtlasSprite batteryNone = spriteGetter.apply(BatteryModelLoader.MATERIAL_BATTERY_NONE);
+        TextureAtlasSprite batteryInput = spriteGetter.apply(BatteryModelLoader.MATERIAL_BATTERY_INPUT);
         Transformation rotation = modelState.getRotation();
         Int2ObjectMap<List<BakedQuad>> down = new Int2ObjectOpenHashMap<List<BakedQuad>>();
         Int2ObjectMap<List<BakedQuad>> up = new Int2ObjectOpenHashMap<List<BakedQuad>>();
@@ -74,27 +76,39 @@ public class BatteryBakedModel implements IDynamicBakedModel {
         Int2ObjectMap<List<BakedQuad>> west = new Int2ObjectOpenHashMap<List<BakedQuad>>();
         Int2ObjectMap<List<BakedQuad>> east = new Int2ObjectOpenHashMap<List<BakedQuad>>();
         List<BakedQuad> downNone = new ArrayList<BakedQuad>();
+        downNone.add(directionalFaceQuad(Direction.DOWN,rotation,batteryNone));
         List<BakedQuad> downInput = new ArrayList<BakedQuad>();
+        downInput.add(directionalFaceQuad(Direction.DOWN,rotation,batteryInput));
         List<BakedQuad> downOutput = new ArrayList<BakedQuad>();
         List<BakedQuad> downBoth = new ArrayList<BakedQuad>();
         List<BakedQuad> upNone = new ArrayList<BakedQuad>();
+        upNone.add(directionalFaceQuad(Direction.UP,rotation,batteryNone));
         List<BakedQuad> upInput = new ArrayList<BakedQuad>();
+        upInput.add(directionalFaceQuad(Direction.UP,rotation,batteryInput));
         List<BakedQuad> upOutput = new ArrayList<BakedQuad>();
         List<BakedQuad> upBoth = new ArrayList<BakedQuad>();
         List<BakedQuad> northNone = new ArrayList<BakedQuad>();
+        northNone.add(directionalFaceQuad(Direction.NORTH,rotation,batteryNone));
         List<BakedQuad> northInput = new ArrayList<BakedQuad>();
+        northInput.add(directionalFaceQuad(Direction.NORTH,rotation,batteryInput));
         List<BakedQuad> northOutput = new ArrayList<BakedQuad>();
         List<BakedQuad> northBoth = new ArrayList<BakedQuad>();
         List<BakedQuad> southNone = new ArrayList<BakedQuad>();
+        southNone.add(directionalFaceQuad(Direction.SOUTH,rotation,batteryNone));
         List<BakedQuad> southInput = new ArrayList<BakedQuad>();
+        southInput.add(directionalFaceQuad(Direction.SOUTH,rotation,batteryInput));
         List<BakedQuad> southOutput = new ArrayList<BakedQuad>();
         List<BakedQuad> southBoth = new ArrayList<BakedQuad>();
         List<BakedQuad> eastNone = new ArrayList<BakedQuad>();
+        eastNone.add(directionalFaceQuad(Direction.EAST,rotation,batteryNone));
         List<BakedQuad> eastInput = new ArrayList<BakedQuad>();
+        eastInput.add(directionalFaceQuad(Direction.EAST,rotation,batteryNone));
         List<BakedQuad> eastOutput = new ArrayList<BakedQuad>();
         List<BakedQuad> eastBoth = new ArrayList<BakedQuad>();
         List<BakedQuad> westNone = new ArrayList<BakedQuad>();
+        westNone.add(directionalFaceQuad(Direction.WEST,rotation,batteryNone));
         List<BakedQuad> westInput = new ArrayList<BakedQuad>();
+        westInput.add(directionalFaceQuad(Direction.WEST,rotation,batteryInput));
         List<BakedQuad> westOutput = new ArrayList<BakedQuad>();
         List<BakedQuad> westBoth = new ArrayList<BakedQuad>();
 
@@ -108,39 +122,28 @@ public class BatteryBakedModel implements IDynamicBakedModel {
         up.put(1,upInput);
         up.put(2,upOutput);
         up.put(3,upBoth);
-        ///East Face
-        east.put(0, eastNone);
-        east.put(1, eastInput);
-        east.put(2, eastOutput);
-        east.put(3, eastBoth);
-        ///West Face
-        west.put(0,westNone);
-        west.put(1,westInput);
-        west.put(2,westOutput);
-        west.put(3,westBoth);
-        ///South Face
-        south.put(0,southNone);
-        south.put(1,southInput);
-        south.put(2,southOutput);
-        south.put(3,southBoth);
         ///North Face
         north.put(0,northNone);
         north.put(1,northInput);
         north.put(2,northOutput);
         north.put(3,northBoth);
+        ///South Face
+        south.put(0,southNone);
+        south.put(1,southInput);
+        south.put(2,southOutput);
+        south.put(3,southBoth);
+        ///West Face
+        west.put(0,westNone);
+        west.put(1,westInput);
+        west.put(2,westOutput);
+        west.put(3,westBoth);
+        ///East Face
+        east.put(0, eastNone);
+        east.put(1, eastInput);
+        east.put(2, eastOutput);
+        east.put(3, eastBoth);
 
-        downNone.add(ClientTools.createQuad(v(0,0,0),
-                v(1,0,0), v(1,0,1), v(0,0,1),rotation,batteryNone));
-        upNone.add(ClientTools.createQuad(v(1,1,0), v(0,1,0), v(0,1,1),
-                v(1,1,1), rotation,batteryNone));
-        westNone.add(ClientTools.createQuad(v(1,1,1),
-                v(1,0,1), v(1,0,0), v(1,1,0),rotation,batteryNone));
-        eastNone.add(ClientTools.createQuad(v(0,1,0),
-                v(0,0,0), v(0,0,1), v(0,1,1),rotation,batteryNone));
-        northNone.add(ClientTools.createQuad(v(1,1,0),
-                v(1,0,0), v(0,0,0), v(0,1,0),rotation,batteryNone));
-        southNone.add(ClientTools.createQuad(v(0,1,1),
-                v(0,0,1), v(1,0,1), v(1,1,1),rotation,batteryNone));
+
 
 
         FACE_QUAD_CACHE.put(Direction.DOWN, down);

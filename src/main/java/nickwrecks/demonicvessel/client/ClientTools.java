@@ -48,6 +48,27 @@ public class ClientTools {
         putVertex(builder, normal, vv4, tw, 0, sprite);
         return quad[0];
     }
+    public static BakedQuad directionalFaceQuad(Direction direction, Transformation rotation, TextureAtlasSprite sprite) {
+        switch (direction) {
+            case DOWN:
+                return createQuad(v(0,0,0),
+                        v(1,0,0), v(1,0,1), v(0,0,1),rotation,sprite);
+            case UP:
+                return createQuad(v(1,1,0),
+                        v(0,1,0), v(0,1,1), v(1,1,1), rotation,sprite);
+            case NORTH:
+                return createQuad(v(1,1,0),
+                        v(1,0,0), v(0,0,0), v(0,1,0),rotation,sprite);
+            case SOUTH:
+                return createQuad(v(0,1,1),
+                        v(0,0,1), v(1,0,1), v(1,1,1),rotation,sprite);
+            case EAST:
+                return createQuad(v(1,1,1),
+                        v(1,0,1), v(1,0,0), v(1,1,0),rotation,sprite);
+        }
+        return createQuad(v(0,1,0),
+                v(0,0,0), v(0,0,1), v(0,1,1),rotation,sprite);
+    }
 
 
 
