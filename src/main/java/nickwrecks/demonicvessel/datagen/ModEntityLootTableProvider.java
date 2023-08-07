@@ -1,9 +1,7 @@
 package nickwrecks.demonicvessel.datagen;
 
 import net.minecraft.data.loot.EntityLootSubProvider;
-import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraftforge.registries.RegistryObject;
 import nickwrecks.demonicvessel.DemonicVessel;
