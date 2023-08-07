@@ -8,6 +8,8 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import nickwrecks.demonicvessel.DemonicVessel;
+import nickwrecks.demonicvessel.block.ModBlocks;
+import nickwrecks.demonicvessel.item.ModItems;
 
 public class ModItemModelProvider extends ItemModelProvider {
         public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -16,7 +18,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         @Override
         protected void registerModels() {
-
+                withExistingParent(ModBlocks.CREATIVE_GENERATOR_BLOCK.getId().getPath(), modLoc("block/creative_generator_block"));
+                withExistingParent(ModItems.BATTERY_BLOCK_ITEM.getId().getPath(), modLoc("block/battery_block"));
         }
 
         private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

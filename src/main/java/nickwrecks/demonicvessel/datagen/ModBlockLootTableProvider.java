@@ -6,15 +6,16 @@ import net.minecraft.data.loot.packs.VanillaBlockLoot;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 import nickwrecks.demonicvessel.DemonicVessel;
+import nickwrecks.demonicvessel.block.ModBlocks;
 
-import java.util.Set;
 
 public class ModBlockLootTableProvider extends VanillaBlockLoot {
 
 
     @Override
     protected void generate() {
-
+        this.dropSelf(ModBlocks.CREATIVE_GENERATOR_BLOCK.get());
+        this.dropSelf(ModBlocks.BATTERY_BLOCK.get());
     }
 
     @Override
