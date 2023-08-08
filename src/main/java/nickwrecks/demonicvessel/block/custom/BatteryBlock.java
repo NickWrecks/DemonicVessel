@@ -22,14 +22,14 @@ public class BatteryBlock extends BaseEntityBlock {
 
 
 
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public BatteryBlock(Properties pProperties) {
         super(pProperties);
     }
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return this.defaultBlockState().setValue(FACING, pContext.getNearestLookingDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
 
     }
     @Override

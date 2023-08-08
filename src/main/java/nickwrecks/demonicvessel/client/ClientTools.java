@@ -69,6 +69,55 @@ public class ClientTools {
         return createQuad(v(0,1,0),
                 v(0,0,0), v(0,0,1), v(0,1,1),rotation,sprite);
     }
+    public static BakedQuad createQuadWithoutRotation(Vector3f v1, Vector3f v2, Vector3f v3, Vector3f v4, TextureAtlasSprite sprite) {
+        Vector3f normal = new Vector3f(v3);
+        normal.sub(v2);
+        Vector3f temp = new Vector3f(v1);
+        temp.sub(v2);
+        normal.cross(temp);
+        normal.normalize();
+
+        int tw = sprite.contents().width();
+        int th = sprite.contents().height();
+
+
+        Vector4f vv1 = new Vector4f(v1, 1.0f);
+        Vector4f vv2 = new Vector4f(v2, 1.0f);
+        Vector4f vv3 = new Vector4f(v3, 1.0f);
+        Vector4f vv4 = new Vector4f(v4, 1.0f);
+
+        BakedQuad[] quad = new BakedQuad[1];
+        var builder = new QuadBakingVertexConsumer(q -> quad[0] = q);
+        builder.setSprite(sprite);
+        builder.setDirection(Direction.getNearest(normal.x(), normal.y(), normal.z()));
+        putVertex(builder, normal, vv1, 0, 0, sprite);
+        putVertex(builder, normal, vv2, 0, th, sprite);
+        putVertex(builder, normal, vv3, tw, th, sprite);
+        putVertex(builder, normal, vv4, tw, 0, sprite);
+        return quad[0];
+    }
+    public static BakedQuad directionalUnrotatedFaceQuad(Direction direction, TextureAtlasSprite sprite) {
+        switch (direction) {
+            case DOWN:
+                return createQuadWithoutRotation(v(0,0,0),
+                        v(1,0,0), v(1,0,1), v(0,0,1),sprite);
+            case UP:
+                return createQuadWithoutRotation(v(1,1,0),
+                        v(0,1,0), v(0,1,1), v(1,1,1),sprite);
+            case NORTH:
+                return createQuadWithoutRotation(v(1,1,0),
+                        v(1,0,0), v(0,0,0), v(0,1,0),sprite);
+            case SOUTH:
+                return createQuadWithoutRotation(v(0,1,1),
+                        v(0,0,1), v(1,0,1), v(1,1,1),sprite);
+            case EAST:
+                return createQuadWithoutRotation(v(1,1,1),
+                        v(1,0,1), v(1,0,0), v(1,1,0),sprite);
+        }
+        return createQuadWithoutRotation(v(0,1,0),
+                v(0,0,0), v(0,0,1), v(0,1,1),sprite);
+    }
+
 
 
 

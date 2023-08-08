@@ -9,7 +9,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.BlockState     ;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.Capability;
@@ -22,25 +22,54 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-import java.util.Arrays;
 
-import static net.minecraft.world.level.block.DirectionalBlock.FACING;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 import static nickwrecks.demonicvessel.block.entity.ModBlockEntities.BATTERY_BLOCK_ENTITY;
 
-public class BatteryBlockEntity extends BlockEntity {
+public class    BatteryBlockEntity extends BlockEntity {
 
 
     protected Direction facing;
+    ///D-U-N-S-W-E
+    int[] inputStatusUnprocessed = {0,0,1,0,0,0};
+    int[] inputStatus = new int[6];
+
     public BatteryBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(BATTERY_BLOCK_ENTITY.get(), pPos, pBlockState);
-        facing = pBlockState.getValue(FACING);
+        facing = pBlockState.getValue(HORIZONTAL_FACING);
+        processInputStatus(facing);
+    }
+
+    private void processInputStatus(Direction facing) {
+
+        inputStatus[facing.get3DDataValue()] = inputStatusUnprocessed[2];
+        inputStatus[Direction.UP.get3DDataValue()] = inputStatusUnprocessed[Direction.UP.get3DDataValue()];
+        inputStatus[Direction.DOWN.get3DDataValue()] = inputStatusUnprocessed[Direction.DOWN.get3DDataValue()];
+        inputStatus[facing.getOpposite().get3DDataValue()] = inputStatusUnprocessed[3];
+        switch (facing) {
+            case NORTH:
+                inputStatus[facing.getClockWise().get3DDataValue()] = inputStatusUnprocessed[4];
+                inputStatus[facing.getCounterClockWise().get3DDataValue()] = inputStatusUnprocessed[5];
+            case SOUTH:
+                inputStatus[facing.getClockWise().get3DDataValue()] = inputStatusUnprocessed[4];
+                inputStatus[facing.getCounterClockWise().get3DDataValue()] = inputStatusUnprocessed[5];
+            case WEST:
+                inputStatus[facing.getClockWise().get3DDataValue()] = inputStatusUnprocessed[4];
+                inputStatus[facing.getCounterClockWise().get3DDataValue()] = inputStatusUnprocessed[5];
+            case EAST:
+                inputStatus[facing.getClockWise().get3DDataValue()] = inputStatusUnprocessed[4];
+                inputStatus[facing.getCounterClockWise().get3DDataValue()] = inputStatusUnprocessed[5];
+
+        }
+
     }
 
 
     public static final ModelProperty<int[]> FACES_INPUT_STATUS = new ModelProperty<>();
 
-    ///D-U-N-S-W-E
-    int[] inputStatus = {1, 1, 0, 1, 1, 1};
+
+
+
 
     private int counter;
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -90,6 +119,8 @@ public class BatteryBlockEntity extends BlockEntity {
         if (counter <= 0) {
             System.out.println(rawDemonicEnergyStorage.getEnergyStored());
             counter = 100;
+            for(int i=0;i<6;i++)
+                System.out.print(this.inputStatus[i]);
             setChanged();
         }
 
