@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "demonicvessel:block/creative_generator_side",
+    "east": "demonicvessel:block/creative_generator_side",
+    "north": "demonicvessel:block/creative_generator_side",
+    "south": "demonicvessel:block/creative_generator_side",
+    "up": "demonicvessel:block/creative_generator_front",
+    "west": "demonicvessel:block/creative_generator_side"
+  }
+}

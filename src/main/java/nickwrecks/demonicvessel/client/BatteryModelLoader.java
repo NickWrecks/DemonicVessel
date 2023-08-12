@@ -24,9 +24,16 @@ public class BatteryModelLoader implements IGeometryLoader<BatteryModelLoader.Ba
 
     public static final ResourceLocation BATTERY_NONE = new ResourceLocation(DemonicVessel.MODID, "block/battery_none");
     public static final ResourceLocation BATTERY_INPUT = new ResourceLocation(DemonicVessel.MODID, "block/battery_input");
+    public static final ResourceLocation BATTERY_OUTPUT = new ResourceLocation(DemonicVessel.MODID, "block/battery_output");
+    public static final ResourceLocation BATTERY_BOTH = new ResourceLocation(DemonicVessel.MODID, "block/battery_both");
+
 
     public static final Material MATERIAL_BATTERY_NONE = ForgeHooksClient.getBlockMaterial(BATTERY_NONE);
     public static final Material MATERIAL_BATTERY_INPUT = ForgeHooksClient.getBlockMaterial(BATTERY_INPUT);
+
+    public static final Material MATERIAL_BATTERY_OUTPUT = ForgeHooksClient.getBlockMaterial(BATTERY_OUTPUT);
+
+    public static final Material MATERIAL_BATTERY_BOTH = ForgeHooksClient.getBlockMaterial(BATTERY_BOTH);
 
     @Override
     public BatteryModelGeometry read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) throws JsonParseException {

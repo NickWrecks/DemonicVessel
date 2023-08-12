@@ -15,7 +15,7 @@ public class ModBlockLootTableProvider extends VanillaBlockLoot {
     @Override
     protected void generate() {
         this.dropSelf(ModBlocks.CREATIVE_GENERATOR_BLOCK.get());
-        this.dropSelf(ModBlocks.BATTERY_BLOCK.get());
+        this.add(ModBlocks.BATTERY_BLOCK.get(),noDrop());
     }
 
     @Override

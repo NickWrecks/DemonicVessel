@@ -1,9 +1,12 @@
 package nickwrecks.demonicvessel;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,6 +22,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import nickwrecks.demonicvessel.block.ModBlocks;
 import nickwrecks.demonicvessel.block.entity.ModBlockEntities;
+import nickwrecks.demonicvessel.client.ClientEvents;
+import nickwrecks.demonicvessel.client.screen.ModScreens;
 import nickwrecks.demonicvessel.item.ModItems;
 import org.slf4j.Logger;
 
@@ -37,7 +42,7 @@ public class DemonicVessel
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
-    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MODID);
+    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MODID);
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
 
     public DemonicVessel()
@@ -51,13 +56,12 @@ public class DemonicVessel
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlockEntities.register(modEventBus);
-        MENU_TYPES.register(modEventBus);
+        ModScreens.register(modEventBus);
         ENTITY_TYPES.register(modEventBus);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-
         // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(this::registerTabs);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -65,20 +69,16 @@ public class DemonicVessel
         // Some common setup code
     }
 
-    private void addCreative(CreativeModeTabEvent.BuildContents event)
-    {
-
-    }
 
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            // Some client setup code
-        }
+    private void registerTabs(CreativeModeTabEvent.Register event) {
+        event.registerCreativeModeTab(new ResourceLocation(MODID, "demonicvesseleverythingtab"), builder -> builder
+                .title(Component.translatable("item_group."+MODID+".everything"))
+                .icon(() -> new ItemStack(ModItems.BATTERY_BLOCK_ITEM.get()))
+                .displayItems((featureFlags, output) -> {
+                    output.accept(ModItems.BATTERY_BLOCK_ITEM.get());
+                    output.accept(ModItems.GENERATOR_BLOCK_ITEM.get());
+                })
+        );
     }
 }

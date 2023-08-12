@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "demonicvessel:block/creative_generator_block",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "demonicvessel:block/creative_generator_block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "demonicvessel:block/creative_generator_block",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "demonicvessel:block/creative_generator_block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "demonicvessel:block/creative_generator_block"
+    },
+    "facing=west": {
+      "model": "demonicvessel:block/creative_generator_block",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

@@ -13,5 +13,8 @@ public class ModLanguageProvider extends LanguageProvider{
     @Override
     protected void addTranslations() {
         add(ModBlocks.CREATIVE_GENERATOR_BLOCK.get(), "Creative Generator");
+        add(ModBlocks.BATTERY_BLOCK.get(), "Unnatural Battery");
+        add("demonicvessel.screen.battery", "Unnatural Batttery");
+        add("item_group.demonicvessel.everything", "Demonic Vessel");
     }
 }

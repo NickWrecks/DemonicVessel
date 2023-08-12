@@ -43,11 +43,11 @@ public class BatteryBakedModel implements IDynamicBakedModel {
 
     private final ItemTransforms itemTransforms;
 
-    private final ModelState modelState;
+
 
 
     public BatteryBakedModel(ModelState modelState,Function<Material, TextureAtlasSprite> spriteGetter, ItemTransforms itemTransforms) {
-        this.modelState = modelState;
+
         this.spriteGetter = spriteGetter;
         this.itemTransforms = itemTransforms;
         generateQuadCache();
@@ -67,7 +67,8 @@ public class BatteryBakedModel implements IDynamicBakedModel {
 
         TextureAtlasSprite batteryNone = spriteGetter.apply(BatteryModelLoader.MATERIAL_BATTERY_NONE);
         TextureAtlasSprite batteryInput = spriteGetter.apply(BatteryModelLoader.MATERIAL_BATTERY_INPUT);
-        Transformation rotation = modelState.getRotation();
+        TextureAtlasSprite batteryOutput = spriteGetter.apply(BatteryModelLoader.MATERIAL_BATTERY_OUTPUT);
+        TextureAtlasSprite batteryBoth = spriteGetter.apply(BatteryModelLoader.MATERIAL_BATTERY_BOTH);
         Int2ObjectMap<List<BakedQuad>> down = new Int2ObjectOpenHashMap<List<BakedQuad>>();
         Int2ObjectMap<List<BakedQuad>> up = new Int2ObjectOpenHashMap<List<BakedQuad>>();
         Int2ObjectMap<List<BakedQuad>> north = new Int2ObjectOpenHashMap<List<BakedQuad>>();
@@ -79,37 +80,49 @@ public class BatteryBakedModel implements IDynamicBakedModel {
         List<BakedQuad> downInput = new ArrayList<BakedQuad>();
         downInput.add(directionalUnrotatedFaceQuad(Direction.DOWN,batteryInput));
         List<BakedQuad> downOutput = new ArrayList<BakedQuad>();
+        downOutput.add(directionalUnrotatedFaceQuad(Direction.DOWN,batteryOutput));
         List<BakedQuad> downBoth = new ArrayList<BakedQuad>();
+        downBoth.add(directionalUnrotatedFaceQuad(Direction.DOWN,batteryBoth));
         List<BakedQuad> upNone = new ArrayList<BakedQuad>();
         upNone.add(directionalUnrotatedFaceQuad(Direction.UP,batteryNone));
         List<BakedQuad> upInput = new ArrayList<BakedQuad>();
         upInput.add(directionalUnrotatedFaceQuad(Direction.UP,batteryInput));
         List<BakedQuad> upOutput = new ArrayList<BakedQuad>();
+        upOutput.add(directionalUnrotatedFaceQuad(Direction.UP,batteryOutput));
         List<BakedQuad> upBoth = new ArrayList<BakedQuad>();
+        upBoth.add(directionalUnrotatedFaceQuad(Direction.UP,batteryBoth));
         List<BakedQuad> northNone = new ArrayList<BakedQuad>();
         northNone.add(directionalUnrotatedFaceQuad(Direction.NORTH,batteryNone));
         List<BakedQuad> northInput = new ArrayList<BakedQuad>();
         northInput.add(directionalUnrotatedFaceQuad(Direction.NORTH,batteryInput));
         List<BakedQuad> northOutput = new ArrayList<BakedQuad>();
+        northOutput.add(directionalUnrotatedFaceQuad(Direction.NORTH,batteryOutput));
         List<BakedQuad> northBoth = new ArrayList<BakedQuad>();
+        northBoth.add(directionalUnrotatedFaceQuad(Direction.NORTH,batteryBoth));
         List<BakedQuad> southNone = new ArrayList<BakedQuad>();
         southNone.add(directionalUnrotatedFaceQuad(Direction.SOUTH,batteryNone));
         List<BakedQuad> southInput = new ArrayList<BakedQuad>();
         southInput.add(directionalUnrotatedFaceQuad(Direction.SOUTH,batteryInput));
         List<BakedQuad> southOutput = new ArrayList<BakedQuad>();
+        southOutput.add(directionalUnrotatedFaceQuad(Direction.SOUTH,batteryOutput));
         List<BakedQuad> southBoth = new ArrayList<BakedQuad>();
+        southBoth.add(directionalUnrotatedFaceQuad(Direction.SOUTH,batteryBoth));
         List<BakedQuad> eastNone = new ArrayList<BakedQuad>();
         eastNone.add(directionalUnrotatedFaceQuad(Direction.EAST,batteryNone));
         List<BakedQuad> eastInput = new ArrayList<BakedQuad>();
         eastInput.add(directionalUnrotatedFaceQuad(Direction.EAST,batteryInput));
         List<BakedQuad> eastOutput = new ArrayList<BakedQuad>();
+        eastOutput.add(directionalUnrotatedFaceQuad(Direction.EAST,batteryOutput));
         List<BakedQuad> eastBoth = new ArrayList<BakedQuad>();
+        eastBoth.add(directionalUnrotatedFaceQuad(Direction.EAST,batteryBoth));
         List<BakedQuad> westNone = new ArrayList<BakedQuad>();
         westNone.add(directionalUnrotatedFaceQuad(Direction.WEST,batteryNone));
         List<BakedQuad> westInput = new ArrayList<BakedQuad>();
         westInput.add(directionalUnrotatedFaceQuad(Direction.WEST,batteryInput));
         List<BakedQuad> westOutput = new ArrayList<BakedQuad>();
+        westOutput.add(directionalUnrotatedFaceQuad(Direction.WEST,batteryOutput));
         List<BakedQuad> westBoth = new ArrayList<BakedQuad>();
+        westBoth.add(directionalUnrotatedFaceQuad(Direction.WEST,batteryBoth));
 
         ///Down face
         down.put(0, downNone);

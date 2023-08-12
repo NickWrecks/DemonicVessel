@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "demonicvessel:block/battery_block"
+    }
+  }
+}

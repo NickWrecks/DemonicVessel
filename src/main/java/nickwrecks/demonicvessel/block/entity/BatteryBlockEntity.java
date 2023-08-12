@@ -23,45 +23,30 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 import static nickwrecks.demonicvessel.block.entity.ModBlockEntities.BATTERY_BLOCK_ENTITY;
 
 public class    BatteryBlockEntity extends BlockEntity {
 
 
+    public static final int BATTERY_CAPACITY = 10000;
     protected Direction facing;
     ///D-U-N-S-W-E
-    int[] inputStatusUnprocessed = {0,0,1,0,0,0};
-    int[] inputStatus = new int[6];
+    public int[] inputStatusForItem = new int[6];
+    public int[] inputStatus = new int[6];
 
     public BatteryBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(BATTERY_BLOCK_ENTITY.get(), pPos, pBlockState);
         facing = pBlockState.getValue(HORIZONTAL_FACING);
-        processInputStatus(facing);
     }
 
-    private void processInputStatus(Direction facing) {
-
-        inputStatus[facing.get3DDataValue()] = inputStatusUnprocessed[2];
-        inputStatus[Direction.UP.get3DDataValue()] = inputStatusUnprocessed[Direction.UP.get3DDataValue()];
-        inputStatus[Direction.DOWN.get3DDataValue()] = inputStatusUnprocessed[Direction.DOWN.get3DDataValue()];
-        inputStatus[facing.getOpposite().get3DDataValue()] = inputStatusUnprocessed[3];
-        switch (facing) {
-            case NORTH:
-                inputStatus[facing.getClockWise().get3DDataValue()] = inputStatusUnprocessed[4];
-                inputStatus[facing.getCounterClockWise().get3DDataValue()] = inputStatusUnprocessed[5];
-            case SOUTH:
-                inputStatus[facing.getClockWise().get3DDataValue()] = inputStatusUnprocessed[4];
-                inputStatus[facing.getCounterClockWise().get3DDataValue()] = inputStatusUnprocessed[5];
-            case WEST:
-                inputStatus[facing.getClockWise().get3DDataValue()] = inputStatusUnprocessed[4];
-                inputStatus[facing.getCounterClockWise().get3DDataValue()] = inputStatusUnprocessed[5];
-            case EAST:
-                inputStatus[facing.getClockWise().get3DDataValue()] = inputStatusUnprocessed[4];
-                inputStatus[facing.getCounterClockWise().get3DDataValue()] = inputStatusUnprocessed[5];
-
-        }
-
+    public int getStoredEnergy() {
+        return rawDemonicEnergyStorage.getEnergyStored();
+    }
+    public void addEnergy(int addedEnergy) {
+        rawDemonicEnergyStorage.addEnergy(addedEnergy);
     }
 
 
@@ -72,7 +57,6 @@ public class    BatteryBlockEntity extends BlockEntity {
 
 
     private int counter;
-    private static final Logger LOGGER = LogUtils.getLogger();
     private final RawDemonicEnergyStorage rawDemonicEnergyStorage = createEnergy();
     private final LazyOptional<IRawDemonicEnergyStorage> rawDemonicEnergy = LazyOptional.of(() -> rawDemonicEnergyStorage);
 
@@ -81,7 +65,7 @@ public class    BatteryBlockEntity extends BlockEntity {
 
 
     private RawDemonicEnergyStorage createEnergy() {
-        return new RawDemonicEnergyStorage(10000, 100) {
+        return new RawDemonicEnergyStorage(BATTERY_CAPACITY, 100) {
             @Override
             protected void onEnergyChanged() {
                 setChanged();
@@ -95,7 +79,6 @@ public class    BatteryBlockEntity extends BlockEntity {
         pTag.put("InputStatus", new IntArrayTag(inputStatus));
         CompoundTag infoTag = new CompoundTag();
         infoTag.putInt("Counter", counter);
-
         super.saveAdditional(pTag);
     }
 
@@ -112,18 +95,36 @@ public class    BatteryBlockEntity extends BlockEntity {
     }
 
     public void tick() {
-        if (counter > 0) {
-            counter--;
             setChanged();
-        }
-        if (counter <= 0) {
-            System.out.println(rawDemonicEnergyStorage.getEnergyStored());
-            counter = 100;
-            for(int i=0;i<6;i++)
-                System.out.print(this.inputStatus[i]);
-            setChanged();
-        }
+            sendOutPower();
+    }
 
+
+
+    private void sendOutPower() {
+        AtomicInteger capacity = new AtomicInteger(rawDemonicEnergyStorage.getEnergyStored());
+        if (capacity.get() > 0) {
+       for(Direction dir : Direction.values()) {
+            BlockEntity be = level.getBlockEntity(worldPosition.relative(dir));
+            if (be != null && (inputStatus[dir.get3DDataValue()]==2 || inputStatus[dir.get3DDataValue()]==4)) {
+                boolean doContinue = be.getCapability(ENERGY_CAPABILITY, facing.getOpposite()).map(handler -> {
+                            if (handler.canReceive()) {
+                                int received = handler.receiveEnergy(Math.min(capacity.get(), 100), false);
+                                capacity.addAndGet(-received);
+                                rawDemonicEnergyStorage.consumeEnergy(received);
+                                setChanged();
+                                return capacity.get() > 0;
+                            } else {
+                                return true;
+                            }
+                        }
+                ).orElse(true);
+                if (!doContinue) {
+                    return;
+                }
+            }
+            }
+        }
     }
 
     @Override
@@ -136,7 +137,7 @@ public class    BatteryBlockEntity extends BlockEntity {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ENERGY_CAPABILITY) {
-            if (inputStatus[side.get3DDataValue()] == 1)
+            if (inputStatus[side.get3DDataValue()] == 1 || inputStatus[side.get3DDataValue()]==4)
                 return rawDemonicEnergy.cast();
         }
 
@@ -160,12 +161,25 @@ public class    BatteryBlockEntity extends BlockEntity {
             requestModelDataUpdate();
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
+        getInputStatusForItem(facing, inputStatusForItem, inputStatus);
     }
 
     @Override
     public @NotNull ModelData getModelData() {
+        requestModelDataUpdate();
         return ModelData.builder()
                 .with(FACES_INPUT_STATUS, inputStatus)
                 .build();
+
+    }
+
+    public void getInputStatusForItem(Direction facing, int[] processed, int[] unprocessed) {
+        processed[Direction.UP.get3DDataValue()]= unprocessed[Direction.UP.get3DDataValue()];
+        processed[Direction.DOWN.get3DDataValue()]= unprocessed[Direction.DOWN.get3DDataValue()];
+        processed[Direction.NORTH.get3DDataValue()]= unprocessed[facing.get3DDataValue()];
+        processed[Direction.SOUTH.get3DDataValue()] = unprocessed[facing.getOpposite().get3DDataValue()];
+        processed[Direction.WEST.get3DDataValue()] =unprocessed[facing.getCounterClockWise().get3DDataValue()];
+        processed[Direction.EAST.get3DDataValue()] =unprocessed[facing.getClockWise().get3DDataValue()];
+
     }
 }
