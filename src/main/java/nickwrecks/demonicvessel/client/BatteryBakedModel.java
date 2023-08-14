@@ -2,7 +2,6 @@ package nickwrecks.demonicvessel.client;
 
 
 
-import com.mojang.math.Transformation;
 import it.unimi.dsi.fastutil.ints.*;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
@@ -17,7 +16,6 @@ import net.minecraft.client.resources.model.SimpleBakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.IDynamicBakedModel;
@@ -39,8 +37,6 @@ public class BatteryBakedModel implements IDynamicBakedModel {
     private final Function<Material, TextureAtlasSprite> spriteGetter;
     private final static Map<Direction, Int2ObjectMap<List<BakedQuad>>> FACE_QUAD_CACHE = new HashMap<>();
     private final Map<Direction, List<BakedQuad>> ITEM_QUAD_CACHE = new EnumMap<>(Direction.class);
-
-
     private final ItemTransforms itemTransforms;
 
 

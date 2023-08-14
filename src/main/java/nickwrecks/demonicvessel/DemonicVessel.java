@@ -9,22 +9,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import nickwrecks.demonicvessel.block.ModBlocks;
 import nickwrecks.demonicvessel.block.entity.ModBlockEntities;
-import nickwrecks.demonicvessel.client.ClientEvents;
 import nickwrecks.demonicvessel.client.screen.ModScreens;
 import nickwrecks.demonicvessel.item.ModItems;
+import nickwrecks.demonicvessel.network.Channel;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -48,10 +45,6 @@ public class DemonicVessel
     public DemonicVessel()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
-
         // Register the Deferred Register to the mod event bus so things get registered
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
@@ -60,16 +53,15 @@ public class DemonicVessel
         ENTITY_TYPES.register(modEventBus);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-        // Register the item to a creative tab
+
         modEventBus.addListener(this::registerTabs);
+        modEventBus.addListener(this::commonSetup);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        // Some common setup code
+        Channel.register();
     }
-
-
 
     private void registerTabs(CreativeModeTabEvent.Register event) {
         event.registerCreativeModeTab(new ResourceLocation(MODID, "demonicvesseleverythingtab"), builder -> builder

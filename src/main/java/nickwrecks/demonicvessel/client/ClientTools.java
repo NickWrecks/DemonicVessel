@@ -1,9 +1,12 @@
 package nickwrecks.demonicvessel.client;
 
 import com.mojang.math.Transformation;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.client.model.pipeline.QuadBakingVertexConsumer;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -118,11 +121,10 @@ public class ClientTools {
                 v(0,0,0), v(0,0,1), v(0,1,1),sprite);
     }
 
-
-
-
     public static Vector3f v(float x, float y, float z) {
         return new Vector3f(x, y, z);
     }
-
+    public static void playClickSound(float pitch) {
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK,0.3F));
+    }
 }

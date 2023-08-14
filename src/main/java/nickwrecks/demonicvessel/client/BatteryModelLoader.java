@@ -42,7 +42,6 @@ public class BatteryModelLoader implements IGeometryLoader<BatteryModelLoader.Ba
 
     public static class BatteryModelGeometry implements IUnbakedGeometry<BatteryModelGeometry> {
 
-
         @Override
         public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
             return new BatteryBakedModel(modelState,spriteGetter, context.getTransforms());

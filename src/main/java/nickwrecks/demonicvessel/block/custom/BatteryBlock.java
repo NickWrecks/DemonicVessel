@@ -1,7 +1,6 @@
 package nickwrecks.demonicvessel.block.custom;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -26,15 +25,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.storage.loot.LootContext;
+
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
+import nickwrecks.demonicvessel.block.BlockTools;
 import nickwrecks.demonicvessel.block.entity.BatteryBlockEntity;
 import nickwrecks.demonicvessel.client.screen.BatteryMenu;
+import nickwrecks.demonicvessel.network.BatteryConfigToClient;
+import nickwrecks.demonicvessel.network.Channel;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 
 public class BatteryBlock extends BaseEntityBlock {
 
@@ -89,6 +89,10 @@ public class BatteryBlock extends BaseEntityBlock {
                 }
             };
             NetworkHooks.openScreen((ServerPlayer) pPlayer, containerProvider, blockEntity.getBlockPos());
+            int[] inputStatusForGui = new int[6];
+            BlockTools.makeInputStatusAbsolute(((BatteryBlockEntity) blockEntity).facing, inputStatusForGui, ((BatteryBlockEntity) blockEntity).inputStatus);
+            Channel.sendToPlayer(new BatteryConfigToClient(inputStatusForGui, pPos), (ServerPlayer) pPlayer);
+
         }
         else {
             throw new IllegalArgumentException("Our named container provider is missing!");
@@ -107,6 +111,7 @@ public class BatteryBlock extends BaseEntityBlock {
         builder.add(FACING);
 
     }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {

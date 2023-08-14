@@ -6,16 +6,16 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.SlotItemHandler;
 import nickwrecks.demonicvessel.block.ModBlocks;
 import nickwrecks.demonicvessel.block.entity.BatteryBlockEntity;
-import org.jetbrains.annotations.Nullable;
+
 
 public class BatteryMenu extends AbstractContainerMenu {
 
 
     private final BlockPos pos;
     private int power;
+
 
     public BatteryMenu(int windowId,Player player, BlockPos pos) {
         super(ModScreens.BATTERY_CONTAINER.get(), windowId);
@@ -49,6 +49,7 @@ public class BatteryMenu extends AbstractContainerMenu {
     public int getPower() {
         return power;
     }
+    public BlockPos getPos() {return pos;}
     private int addSlotRange(Container playerInventory, int index, int x, int y, int amount, int dx) {
         for (int i = 0 ; i < amount ; i++) {
             addSlot(new Slot(playerInventory, index, x, y));
