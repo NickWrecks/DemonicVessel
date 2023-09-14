@@ -1,17 +1,23 @@
 package nickwrecks.demonicvessel.client;
 
+import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Transformation;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.client.model.pipeline.QuadBakingVertexConsumer;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
+import org.joml.*;
+
 
 public class ClientTools {
+
     private static void putVertex(QuadBakingVertexConsumer builder, Vector3f normal, Vector4f vector,
                                   float u, float v, TextureAtlasSprite sprite) {
         builder.vertex(vector.x(), vector.y(), vector.z())
@@ -126,5 +132,25 @@ public class ClientTools {
     }
     public static void playClickSound(float pitch) {
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK,0.3F));
+    }
+
+
+
+    public static void renderBillboardQuadBright(PoseStack matrixStack, VertexConsumer builder, float scale, ResourceLocation texture) {
+        int b1 = LightTexture.FULL_BRIGHT >> 16 & 65535;
+        int b2 = LightTexture.FULL_BRIGHT & 65535;
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(texture);
+        matrixStack.pushPose();
+        matrixStack.translate(0.5, 0.95, 0.5);
+        Quaternionf rotation = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+        matrixStack.mulPose(rotation);
+        Matrix4f matrix = matrixStack.last().pose();
+        builder.vertex(matrix, -scale, -scale, 0.0f).color(255, 255, 255, 255).uv(sprite.getU0(), sprite.getV0()).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(b1,b2).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, -scale, scale, 0.0f).color(255, 255, 255, 255).uv(sprite.getU0(), sprite.getV1()).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(b1, b2).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, scale, scale, 0.0f).color(255, 255, 255, 255).uv(sprite.getU1(), sprite.getV1()).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(b1, b2).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, scale, -scale, 0.0f).color(255, 255, 255, 255).uv(sprite.getU1(), sprite.getV0()).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(b1, b2).normal(1, 0, 0).endVertex();
+        matrixStack.popPose();
+
+
     }
 }

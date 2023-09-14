@@ -1,3 +1,3 @@
-// 1.19.4	2023-08-11T11:25:26.00643627	Tags for minecraft:block mod id demonicvessel
-6fdaa65e38c71e8bdcaba4e44e2e566e29a0c048 data/minecraft/tags/blocks/mineable/pickaxe.json
-6fdaa65e38c71e8bdcaba4e44e2e566e29a0c048 data/minecraft/tags/blocks/needs_iron_tool.json
+// 1.19.4	2023-08-14T18:43:34.110845399	Tags for minecraft:block mod id demonicvessel
+4fd710c72820ded28314aac7a0882314f271da4f data/minecraft/tags/blocks/mineable/pickaxe.json
+9b6911f83e5a20e3ed1b46421d948e1f59fb4b40 data/minecraft/tags/blocks/needs_iron_tool.json

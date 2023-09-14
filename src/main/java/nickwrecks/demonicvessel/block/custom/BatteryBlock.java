@@ -57,7 +57,7 @@ public class BatteryBlock extends BaseEntityBlock {
     @Override
     public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-        if(blockentity instanceof BatteryBlockEntity) {
+        if(blockentity instanceof BatteryBlockEntity && !pPlayer.isCreative()) {
             ItemStack itemStack = new ItemStack(this);
             itemStack.getOrCreateTag().putIntArray("InputStatus", ((BatteryBlockEntity) blockentity).inputStatusForItem);
             itemStack.getOrCreateTag().putInt("Energy", ((BatteryBlockEntity) blockentity).getStoredEnergy());

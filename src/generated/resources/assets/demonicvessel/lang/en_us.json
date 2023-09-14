@@ -1,6 +1,9 @@
 {
+  "block.demonicvessel.abbadonium_block": "Block of Abbadonium",
   "block.demonicvessel.battery_block": "Unnatural Battery",
   "block.demonicvessel.creative_generator_block": "Creative Generator",
   "demonicvessel.screen.battery": "Unnatural Battery",
+  "entity.demonicvessel.lesser_demon": "Lesser Demon",
+  "item.demonicvessel.abbadonium_ingot": "Abbadonium Ingot",
   "item_group.demonicvessel.everything": "Demonic Vessel"
 }

@@ -24,6 +24,7 @@ public class ModBlockstateProvider extends BlockStateProvider {
         BlockModelBuilder modelCreativeGenerator = models().cube("creative_generator_block", creativeGeneratorSide,creativeGeneratorFront,creativeGeneratorSide,creativeGeneratorSide,creativeGeneratorSide,creativeGeneratorSide);
         directionalBlock(ModBlocks.CREATIVE_GENERATOR_BLOCK.get(), modelCreativeGenerator);
         registerBattery();
+        simpleBlock(ModBlocks.ABBADONIUM_BLOCK.get());
     }
 
     private void registerBattery(){

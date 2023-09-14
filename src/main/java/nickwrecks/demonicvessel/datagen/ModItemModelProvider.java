@@ -20,6 +20,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         protected void registerModels() {
                 withExistingParent(ModBlocks.CREATIVE_GENERATOR_BLOCK.getId().getPath(), modLoc("block/creative_generator_block"));
                 withExistingParent(ModItems.BATTERY_BLOCK_ITEM.getId().getPath(), modLoc("block/battery_block"));
+                simpleItem(ModItems.ABBADONIUM_INGOT);
+                withExistingParent(ModItems.ABBADONIUM_BLOCK.getId().getPath(),modLoc("block/abbadonium_block"));
         }
 
         private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

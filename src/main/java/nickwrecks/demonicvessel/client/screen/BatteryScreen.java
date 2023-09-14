@@ -168,7 +168,7 @@ public class BatteryScreen extends AbstractContainerScreen<BatteryMenu> {
             else if(pMouseY>topPos+configOffsetTop+16 && pMouseY<=topPos+configOffsetTop+16+16) {configCycle(0); playClickSound(0.5f);
                 Channel.sendToServer(new BatteryConfigToServer(config,getMenu().getPos()));}
         }
-        else if(pMouseX>leftPos-configOffsetLeft && pMouseX>leftPos-configOffsetLeft+16){
+        else if(pMouseX>leftPos-configOffsetLeft+18 && pMouseX<=leftPos-configOffsetLeft+18+16){
             if(pMouseY>topPos+configOffsetTop && pMouseY<=topPos+configOffsetTop+16) {configCycle(4);playClickSound(0.5f);
                 Channel.sendToServer(new BatteryConfigToServer(config,getMenu().getPos()));}
             if(pMouseY>topPos+configOffsetTop+18 && pMouseY<=topPos+configOffsetTop+18+16) {configCycle(3);playClickSound(0.5f);

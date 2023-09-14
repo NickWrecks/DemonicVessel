@@ -1,14 +1,12 @@
 package nickwrecks.demonicvessel.datagen;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import nickwrecks.demonicvessel.DemonicVessel;
 import nickwrecks.demonicvessel.block.ModBlocks;
-import org.checkerframework.checker.index.qual.PolyUpperBound;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -22,8 +20,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.BATTERY_BLOCK.get());
+                .add(ModBlocks.BATTERY_BLOCK.get())
+                .add(ModBlocks.ABBADONIUM_BLOCK.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(ModBlocks.ABBADONIUM_BLOCK.get())
                 .add(ModBlocks.BATTERY_BLOCK.get());
+
     }
 }

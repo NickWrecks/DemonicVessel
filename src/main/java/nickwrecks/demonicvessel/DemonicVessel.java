@@ -1,9 +1,12 @@
 package nickwrecks.demonicvessel;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +22,11 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import nickwrecks.demonicvessel.block.ModBlocks;
 import nickwrecks.demonicvessel.block.entity.ModBlockEntities;
+import nickwrecks.demonicvessel.client.particle.ModParticleTypes;
 import nickwrecks.demonicvessel.client.screen.ModScreens;
+import nickwrecks.demonicvessel.client.screen.ModSounds;
+import nickwrecks.demonicvessel.entity.ModEntityTypes;
+import nickwrecks.demonicvessel.entity.ai.behaviour.ModMemoryModuleTypes;
 import nickwrecks.demonicvessel.item.ModItems;
 import nickwrecks.demonicvessel.network.Channel;
 import org.slf4j.Logger;
@@ -41,7 +48,10 @@ public class DemonicVessel
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MODID);
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
+    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, MODID);
 
+    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, MODID);
+    public static final DeferredRegister<MemoryModuleType<?>> MEMORY_MODULE_TYPE = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, MODID);
     public DemonicVessel()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -50,10 +60,12 @@ public class DemonicVessel
         ModItems.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModScreens.register(modEventBus);
-        ENTITY_TYPES.register(modEventBus);
+        ModEntityTypes.register(modEventBus);
+        ModParticleTypes.register(modEventBus);
+        ModMemoryModuleTypes.register(modEventBus);
+        ModSounds.register(modEventBus);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-
         modEventBus.addListener(this::registerTabs);
         modEventBus.addListener(this::commonSetup);
     }
@@ -70,6 +82,8 @@ public class DemonicVessel
                 .displayItems((featureFlags, output) -> {
                     output.accept(ModItems.BATTERY_BLOCK_ITEM.get());
                     output.accept(ModItems.GENERATOR_BLOCK_ITEM.get());
+                    output.accept(ModItems.ABBADONIUM_INGOT.get());
+                    output.accept(ModItems.ABBADONIUM_BLOCK.get());
                 })
         );
     }

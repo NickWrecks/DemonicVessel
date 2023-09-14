@@ -1,1 +1,5 @@
-// 1.19.4	2023-06-29T12:57:42.098073	Recipes
+// 1.19.4	2023-08-14T18:53:23.60938481	Recipes
+3404911da14646f9c506c0827da874c1a4abcb68 data/minecraft/advancements/recipes/misc/abbadonium_block.json
+564a431ce231a61f01f26957260b31bf668dc5c3 data/minecraft/advancements/recipes/misc/abbadonium_ingot.json
+ed0e82f0ef87b12c3d41d235c5c0913b5bc2d1c6 data/minecraft/recipes/abbadonium_block.json
+86a67d7b77270028e5298a17194636056ac4f1b8 data/minecraft/recipes/abbadonium_ingot.json

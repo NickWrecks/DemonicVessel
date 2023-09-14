@@ -4,6 +4,8 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import nickwrecks.demonicvessel.DemonicVessel;
 import nickwrecks.demonicvessel.block.ModBlocks;
+import nickwrecks.demonicvessel.entity.ModEntityTypes;
+import nickwrecks.demonicvessel.item.ModItems;
 
 public class ModLanguageProvider extends LanguageProvider{
     public ModLanguageProvider(PackOutput output, String locale) {
@@ -16,5 +18,8 @@ public class ModLanguageProvider extends LanguageProvider{
         add(ModBlocks.BATTERY_BLOCK.get(), "Unnatural Battery");
         add("demonicvessel.screen.battery", "Unnatural Battery");
         add("item_group.demonicvessel.everything", "Demonic Vessel");
+        add(ModItems.ABBADONIUM_INGOT.get(), "Abbadonium Ingot");
+        add(ModBlocks.ABBADONIUM_BLOCK.get(), "Block of Abbadonium");
+        add(ModEntityTypes.LESSER_DEMON.get(), "Lesser Demon");
     }
 }

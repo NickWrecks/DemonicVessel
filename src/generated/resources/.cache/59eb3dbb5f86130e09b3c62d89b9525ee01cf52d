@@ -1,3 +1,5 @@
-// 1.19.4	2023-08-11T12:24:57.692954955	Loot Tables
+// 1.19.4	2023-08-16T13:58:35.257139983	Loot Tables
+8c8fa20e59fc10a2737b0251a2f93d669115eadb data/demonicvessel/loot_tables/blocks/abbadonium_block.json
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/demonicvessel/loot_tables/blocks/battery_block.json
 5fb8954b008859bb9eaccb47458279d53bce5ad1 data/demonicvessel/loot_tables/blocks/creative_generator_block.json
+ef017fe8afbc1e704a7cfb4818ece7ba018f9c91 data/demonicvessel/loot_tables/entities/lesser_demon.json

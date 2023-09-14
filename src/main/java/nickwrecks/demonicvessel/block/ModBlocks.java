@@ -17,6 +17,8 @@ public class ModBlocks {
             ()-> new CreativeGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6.0f)));
     public static final RegistryObject<Block> BATTERY_BLOCK = BLOCKS.register("battery_block",
             ()-> new BatteryBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6.0f)));
+    public static final RegistryObject<Block> ABBADONIUM_BLOCK = BLOCKS.register("abbadonium_block",
+            () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(6.0f)));
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);

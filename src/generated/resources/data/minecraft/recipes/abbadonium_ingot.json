@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "demonicvessel:abbadonium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "demonicvessel:abbadonium_ingot"
+  }
+}

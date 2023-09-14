@@ -4,6 +4,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
+import nickwrecks.demonicvessel.block.ModBlocks;
 import nickwrecks.demonicvessel.item.custom.BatteryBlockItem;
 
 import static nickwrecks.demonicvessel.DemonicVessel.ITEMS;
@@ -16,6 +17,10 @@ public class ModItems {
             ()-> new BlockItem(CREATIVE_GENERATOR_BLOCK.get(),new Item.Properties()));
     public static final RegistryObject<Item> BATTERY_BLOCK_ITEM = ITEMS.register("battery_block",
             ()-> new BatteryBlockItem(BATTERY_BLOCK.get(),new Item.Properties()));
+    public static final RegistryObject<Item> ABBADONIUM_INGOT = ITEMS.register("abbadonium_ingot",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ABBADONIUM_BLOCK = ITEMS.register("abbadonium_block",
+            ()-> new BlockItem(ModBlocks.ABBADONIUM_BLOCK.get(), new Item.Properties()));
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

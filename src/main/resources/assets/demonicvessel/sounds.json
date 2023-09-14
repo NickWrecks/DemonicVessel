@@ -1,0 +1,11 @@
+{
+  "lesser_whisper": {
+    "sounds": [ "demonicvessel:lesser_whisper" ]
+  },
+  "lesser_impact": {
+    "sounds": [ "demonicvessel:lesser_impact" ]
+  },
+  "lesser_slow_casting": {
+    "sounds": [ "demonicvessel:lesser_slow_casting"]
+  }
+}
