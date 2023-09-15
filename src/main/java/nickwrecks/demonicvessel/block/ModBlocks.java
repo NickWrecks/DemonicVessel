@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 import nickwrecks.demonicvessel.block.custom.BatteryBlock;
 import nickwrecks.demonicvessel.block.custom.CreativeGeneratorBlock;
+import nickwrecks.demonicvessel.block.custom.FamishedGeneratorBlock;
 
 import static nickwrecks.demonicvessel.DemonicVessel.BLOCKS;
 
@@ -19,6 +20,9 @@ public class ModBlocks {
             ()-> new BatteryBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6.0f)));
     public static final RegistryObject<Block> ABBADONIUM_BLOCK = BLOCKS.register("abbadonium_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(6.0f)));
+    public static final RegistryObject<Block> FAMISHED_GENERATOR_BLOCK = BLOCKS.register("famished_generator_block",
+            () -> new FamishedGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6.0f)));
+
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);

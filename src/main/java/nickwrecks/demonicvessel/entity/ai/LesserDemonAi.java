@@ -48,7 +48,9 @@ public class LesserDemonAi {
     private static void initFightActivity(LesserDemonEntity lesserDemonEntity, Brain<LesserDemonEntity> pBrain) {
         pBrain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 5, ImmutableList.of(SetEntityLookTarget.create((pEntity) -> {
             return isTarget(lesserDemonEntity, pEntity);
-        },(float) lesserDemonEntity.getAttributeValue(Attributes.FOLLOW_RANGE)), BackUpIfTooClose.create(2,1.0f), new LesserLaser(), new LesserSlow(),
+        },(float) lesserDemonEntity.getAttributeValue(Attributes.FOLLOW_RANGE)),
+                        BackUpIfTooClose.create(2,1.0f), new LesserLaser(), new LesserSlow(),
+                StopAttackingIfTargetInvalid.create((entity) -> !lesserDemonEntity.canTargetEntity(entity)),
                 new RunOne<>(ImmutableList.of(
                 Pair.of(RandomStroll.fly(1.0f),2),
                 Pair.of(SetWalkTargetFromLookTarget.create(1.0f,10),1)))),

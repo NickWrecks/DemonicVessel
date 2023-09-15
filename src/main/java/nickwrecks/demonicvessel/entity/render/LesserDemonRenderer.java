@@ -73,12 +73,12 @@ public class LesserDemonRenderer extends EntityRenderer<LesserDemonEntity> {
             float f20 = Mth.sin(f7 + (float)Math.PI) ;//* 0.5F;
             float f21 = Mth.cos(f7 + 0.0F) ;//* 0.5F;
             float f22 = Mth.sin(f7 + 0.0F) ;//* 0.5F;
-            float f23 = Mth.cos(f7 + ((float)Math.PI / 2F)) ;//* 0.5F;
+         /*   float f23 = Mth.cos(f7 + ((float)Math.PI / 2F)) ;//* 0.5F;
             float f24 = Mth.sin(f7 + ((float)Math.PI / 2F)) ;//* 0.5F;
             float f25 = Mth.cos(f7 + ((float)Math.PI * 1.5F)) ;//* 0.5F;
-            float f26 = Mth.sin(f7 + ((float)Math.PI * 1.5F)) ;//* 0.5F;
+            float f26 = Mth.sin(f7 + ((float)Math.PI * 1.5F)) ;//* 0.5F; */
             float f29 = 0.0F  /* + f2*/;
-            float f30 = f4 * 2.5F + f29;
+          ///  float f30 = f4 * 2.5F + f29;
             VertexConsumer vertexconsumer = pBuffer.getBuffer(LIGHTNING_RENDER_TYPE);
             PoseStack.Pose posestack$pose = pPoseStack.last();
             Matrix4f matrix4f = posestack$pose.pose();

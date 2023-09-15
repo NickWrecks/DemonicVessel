@@ -1,4 +1,12 @@
-// 1.19.4	2023-08-14T18:53:23.60938481	Recipes
+// 1.19.4	2023-09-15T18:48:55.855856662	Recipes
+ba9b8d2b1323efc3c18cf974dc12c05e89c34c52 data/demonicvessel/advancements/recipes/combat/empty_soul_syringe.json
+ac528f597b205bbaaa1c4e98480829188ad6be12 data/demonicvessel/advancements/recipes/misc/abbadonium_gear.json
+82ae0d08527611dacaeaaa435559a71d52d1ec48 data/demonicvessel/advancements/recipes/misc/abbadonium_jacket.json
+83cfd7c91fb3fefd5e0d59acb09ec43c923150fe data/demonicvessel/advancements/recipes/redstone/battery_block.json
+c0b8e05028a70dc8067d1f327c3fc28983f0ab53 data/demonicvessel/recipes/abbadonium_gear.json
+d3aad2c11c548809a35fc04a87e396f232e37a5e data/demonicvessel/recipes/abbadonium_jacket.json
+f054d3db438a8186b463bf383f38838890fb78aa data/demonicvessel/recipes/battery_block.json
+4ad5e6b15503bb2dbac10fe34b464b6367d84b12 data/demonicvessel/recipes/empty_soul_syringe.json
 3404911da14646f9c506c0827da874c1a4abcb68 data/minecraft/advancements/recipes/misc/abbadonium_block.json
 564a431ce231a61f01f26957260b31bf668dc5c3 data/minecraft/advancements/recipes/misc/abbadonium_ingot.json
 ed0e82f0ef87b12c3d41d235c5c0913b5bc2d1c6 data/minecraft/recipes/abbadonium_block.json

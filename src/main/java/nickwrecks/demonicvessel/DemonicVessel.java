@@ -78,12 +78,10 @@ public class DemonicVessel
     private void registerTabs(CreativeModeTabEvent.Register event) {
         event.registerCreativeModeTab(new ResourceLocation(MODID, "demonicvesseleverythingtab"), builder -> builder
                 .title(Component.translatable("item_group."+MODID+".everything"))
-                .icon(() -> new ItemStack(ModItems.BATTERY_BLOCK_ITEM.get()))
+                .icon(() -> new ItemStack(ModItems.EMPTY_SOUL_SYRINGE.get()))
                 .displayItems((featureFlags, output) -> {
-                    output.accept(ModItems.BATTERY_BLOCK_ITEM.get());
-                    output.accept(ModItems.GENERATOR_BLOCK_ITEM.get());
-                    output.accept(ModItems.ABBADONIUM_INGOT.get());
-                    output.accept(ModItems.ABBADONIUM_BLOCK.get());
+                    ITEMS.getEntries().stream().forEach((item) -> output.accept(item.get()));
+
                 })
         );
     }

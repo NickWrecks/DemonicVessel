@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "demonicvessel:abbadonium_ingot"
+    },
+    "O": {
+      "item": "demonicvessel:abbadonium_gear"
+    }
+  },
+  "pattern": [
+    "AOA",
+    "A A",
+    "AOA"
+  ],
+  "result": {
+    "item": "demonicvessel:abbadonium_jacket"
+  },
+  "show_notification": true
+}

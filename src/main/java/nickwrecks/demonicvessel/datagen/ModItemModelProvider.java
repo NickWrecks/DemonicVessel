@@ -18,10 +18,16 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         @Override
         protected void registerModels() {
-                withExistingParent(ModBlocks.CREATIVE_GENERATOR_BLOCK.getId().getPath(), modLoc("block/creative_generator_block"));
+                withExistingParent(ModItems.GENERATOR_BLOCK_ITEM.getId().getPath(), modLoc("block/creative_generator_block"));
                 withExistingParent(ModItems.BATTERY_BLOCK_ITEM.getId().getPath(), modLoc("block/battery_block"));
+                withExistingParent(ModItems.FAMISHED_GENERATOR_ITEM.getId().getPath(),modLoc("block/famished_generator"));
+                cubeAll(ModItems.ABBADONIUM_JACKET.getId().getPath(), modLoc("item/abbadonium_jacket"));
                 simpleItem(ModItems.ABBADONIUM_INGOT);
                 withExistingParent(ModItems.ABBADONIUM_BLOCK.getId().getPath(),modLoc("block/abbadonium_block"));
+                simpleItem(ModItems.EMPTY_SOUL_SYRINGE);
+                simpleItem(ModItems.LESSER_SOUL_SYRINGE);
+                simpleItem(ModItems.ABBADONIUM_GEAR);
+                withExistingParent(ModItems.LESSER_DEMON_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         }
 
         private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
@@ -29,6 +35,8 @@ public class ModItemModelProvider extends ItemModelProvider {
                         new ResourceLocation("item/generated")).texture("layer0",
                         new ResourceLocation(DemonicVessel.MODID, "item/" + item.getId().getPath()));
         }
+
+
 
         private ItemModelBuilder handheldItem(RegistryObject<Item> item) {
                 return withExistingParent(item.getId().getPath(),

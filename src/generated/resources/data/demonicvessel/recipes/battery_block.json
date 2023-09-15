@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "J": {
+      "item": "demonicvessel:abbadonium_jacket"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "pattern": [
+    " G ",
+    "GRG",
+    " J "
+  ],
+  "result": {
+    "item": "demonicvessel:battery_block"
+  },
+  "show_notification": true
+}

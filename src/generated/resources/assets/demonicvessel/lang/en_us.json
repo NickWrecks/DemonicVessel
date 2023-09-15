@@ -2,8 +2,14 @@
   "block.demonicvessel.abbadonium_block": "Block of Abbadonium",
   "block.demonicvessel.battery_block": "Unnatural Battery",
   "block.demonicvessel.creative_generator_block": "Creative Generator",
+  "block.demonicvessel.famished_generator_block": "Famished Generator",
   "demonicvessel.screen.battery": "Unnatural Battery",
   "entity.demonicvessel.lesser_demon": "Lesser Demon",
+  "item.demonicvessel.abbadonium_gear": "Abbadonium Gear",
   "item.demonicvessel.abbadonium_ingot": "Abbadonium Ingot",
+  "item.demonicvessel.abbadonium_jacket": "Abbadonium Jacket",
+  "item.demonicvessel.empty_soul_syringe": "Empty Soul Syringe",
+  "item.demonicvessel.lesser_demon_spawn_egg": "Lesser Demon Spawn Egg",
+  "item.demonicvessel.lesser_soul_syringe": "Lesser Soul Syringe",
   "item_group.demonicvessel.everything": "Demonic Vessel"
 }

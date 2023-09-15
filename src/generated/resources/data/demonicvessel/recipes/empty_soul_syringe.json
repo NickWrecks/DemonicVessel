@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "IGI",
+    " G "
+  ],
+  "result": {
+    "item": "demonicvessel:empty_soul_syringe"
+  },
+  "show_notification": true
+}

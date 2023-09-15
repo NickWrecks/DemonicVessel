@@ -1,6 +1,7 @@
 {
   "values": [
     "demonicvessel:abbadonium_block",
-    "demonicvessel:battery_block"
+    "demonicvessel:battery_block",
+    "demonicvessel:famished_generator_block"
   ]
 }

@@ -38,7 +38,7 @@ public class LesserLaser extends Behavior<LesserDemonEntity> {
     protected void start(ServerLevel pLevel, LesserDemonEntity pEntity, long pGameTime) {
         pEntity.getBrain().setMemoryWithExpiry(MemoryModuleType.ATTACK_COOLING_DOWN, true, (long) DURATION);
         pEntity.getBrain().setMemoryWithExpiry(ModMemoryModuleTypes.LESSER_LASER_SOUND_DELAY.get(), Unit.INSTANCE, (long) TICKS_BEFORE_PLAYING_SOUND);
-        pEntity.playSound(ModSounds.LESSER_WHISPER.get(), 1.0F, 1.0F);
+        pEntity.playSound(ModSounds.LESSER_WHISPER.get(), 1.0F, 1.0f);
     }
 
     @Override
@@ -56,12 +56,7 @@ public class LesserLaser extends Behavior<LesserDemonEntity> {
 
                 pOwner.playSound(ModSounds.LESSER_IMPACT.get(), 0.5F, 0.8F);
                 livingEntity.hurt(pLevel.m_269111_().m_269548_(), 8.0F);
-            }, new Runnable() {
-                @Override
-                public void run() {
-                    pOwner.setActiveAttackTarget(0);
-                }
-            });
+            }, () -> pOwner.setActiveAttackTarget(0));
         }
         else pOwner.setActiveAttackTarget(0);
     }

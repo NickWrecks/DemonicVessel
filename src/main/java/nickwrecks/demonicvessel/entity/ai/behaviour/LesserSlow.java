@@ -52,7 +52,11 @@ public class LesserSlow extends Behavior<LesserDemonEntity> {
 
     @Override
     protected void tick(ServerLevel pLevel, LesserDemonEntity pOwner, long pGameTime) {
-
+        pOwner.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).ifPresentOrElse((pEntity) -> {
+                    pOwner.getLookControl().setLookAt(pEntity.position());
+                    pEntity.playSound(ModSounds.LESSER_WHISPER.get(), 1.0F, 1.0F);
+                },
+                () -> pOwner.setIsChannelingSlow(false));
         if (!pOwner.getBrain().hasMemoryValue(ModMemoryModuleTypes.LESSER_SLOW_SOUND_DELAY.get()) && !pOwner.getBrain().hasMemoryValue(ModMemoryModuleTypes.LESSER_SLOW_SOUND_COOLDOWN.get())
             && pOwner.getBrain().hasMemoryValue(ModMemoryModuleTypes.LESSER_LASER_COOLDOWN.get())) {
 

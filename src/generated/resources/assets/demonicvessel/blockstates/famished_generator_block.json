@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "demonicvessel:block/famished_generator",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "demonicvessel:block/famished_generator"
+    },
+    "facing=south": {
+      "model": "demonicvessel:block/famished_generator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "demonicvessel:block/famished_generator",
+      "y": 270
+    }
+  }
+}

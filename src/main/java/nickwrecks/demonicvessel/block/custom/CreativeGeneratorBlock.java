@@ -20,9 +20,6 @@ import org.slf4j.Logger;
 
 public class CreativeGeneratorBlock extends BaseEntityBlock {
 
-
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public CreativeGeneratorBlock(Properties pProperties) {
