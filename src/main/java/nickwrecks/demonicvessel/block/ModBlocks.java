@@ -21,7 +21,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> ABBADONIUM_BLOCK = BLOCKS.register("abbadonium_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.METAL).strength(6.0f)));
     public static final RegistryObject<Block> FAMISHED_GENERATOR_BLOCK = BLOCKS.register("famished_generator_block",
-            () -> new FamishedGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL).strength(6.0f)));
+            () -> new FamishedGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion().strength(6.0f)));
 
 
     public static void register(IEventBus eventBus) {

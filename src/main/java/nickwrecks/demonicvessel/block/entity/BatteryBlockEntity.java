@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 import static nickwrecks.demonicvessel.block.entity.ModBlockEntities.BATTERY_BLOCK_ENTITY;
 
-public class    BatteryBlockEntity extends BlockEntity {
+public class BatteryBlockEntity extends BlockEntity {
 
 
     public static final int BATTERY_CAPACITY = 10000;

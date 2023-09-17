@@ -5,8 +5,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 
 import static nickwrecks.demonicvessel.DemonicVessel.BLOCK_ENTITIES;
-import static nickwrecks.demonicvessel.block.ModBlocks.BATTERY_BLOCK;
-import static nickwrecks.demonicvessel.block.ModBlocks.CREATIVE_GENERATOR_BLOCK;
+import static nickwrecks.demonicvessel.block.ModBlocks.*;
 
 public class ModBlockEntities {
 
@@ -14,6 +13,8 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(CreativeGeneratorBlockEntity::new, CREATIVE_GENERATOR_BLOCK.get()).build(null));
     public static final RegistryObject<BlockEntityType<BatteryBlockEntity>> BATTERY_BLOCK_ENTITY = BLOCK_ENTITIES.register("battery_block_entity",
             () -> BlockEntityType.Builder.of(BatteryBlockEntity::new, BATTERY_BLOCK.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FamishedGeneratorBlockEntity>> FAMISHED_GENERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("famished_generator_block_entity",
+            () -> BlockEntityType.Builder.of(FamishedGeneratorBlockEntity::new, FAMISHED_GENERATOR_BLOCK.get()).build(null));
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

@@ -3,8 +3,6 @@ package nickwrecks.demonicvessel.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
@@ -13,9 +11,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import nickwrecks.demonicvessel.DemonicVessel;
-import nickwrecks.demonicvessel.block.ModBlocks;
-import nickwrecks.demonicvessel.client.particle.PurpleStarParticle;
+import nickwrecks.demonicvessel.block.entity.ModBlockEntities;
 import nickwrecks.demonicvessel.client.particle.ModParticleTypes;
+import nickwrecks.demonicvessel.client.particle.PurpleStarParticle;
 import nickwrecks.demonicvessel.client.screen.BatteryScreen;
 import nickwrecks.demonicvessel.client.screen.ModScreens;
 import nickwrecks.demonicvessel.entity.ModEntityTypes;
@@ -39,6 +37,12 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntityTypes.LESSER_DEMON.get(), LesserDemonRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.FAMISHED_GENERATOR_BLOCK_ENTITY.get(), FamishedGeneratorRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(FamishedGeneratorJawModel.LAYER_LOCATION, FamishedGeneratorJawModel::createBodyLayer);
     }
     @SubscribeEvent
     public static void onRegisterSpriteParticle(RegisterParticleProvidersEvent event) {

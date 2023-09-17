@@ -2,20 +2,29 @@ package nickwrecks.demonicvessel.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import nickwrecks.demonicvessel.block.entity.FamishedGeneratorBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class FamishedGeneratorBlock extends Block {
+public class FamishedGeneratorBlock extends BaseEntityBlock {
     public static final DirectionProperty HORIZONTAL_FACING =  BlockStateProperties.HORIZONTAL_FACING;
     public FamishedGeneratorBlock(Properties pProperties) {
         super(pProperties);
+    }
+
+
+    @Override
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
     }
 
     @Override
@@ -39,4 +48,27 @@ public class FamishedGeneratorBlock extends Block {
         return pState.rotate(pMirror.getRotation(pState.getValue(HORIZONTAL_FACING)));
     }
 
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new FamishedGeneratorBlockEntity(pPos,pState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        if (pLevel.isClientSide()) {
+            return (lvl, pos, blockState, t) -> {
+                if (t instanceof FamishedGeneratorBlockEntity tile) {
+                    tile.tickClient();
+                }
+            };
+        }
+        /*return (lvl, pos, blockState, t) -> {
+            if (t instanceof FamishedGeneratorBlockEntity tile) {
+                tile.tickServer();
+            }
+        };*/
+        return null;
+    }
 }
