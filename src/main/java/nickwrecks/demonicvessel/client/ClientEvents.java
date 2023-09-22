@@ -15,6 +15,8 @@ import nickwrecks.demonicvessel.block.entity.ModBlockEntities;
 import nickwrecks.demonicvessel.client.particle.ModParticleTypes;
 import nickwrecks.demonicvessel.client.particle.PurpleStarParticle;
 import nickwrecks.demonicvessel.client.screen.BatteryScreen;
+import nickwrecks.demonicvessel.client.screen.DistillationFeederScreen;
+import nickwrecks.demonicvessel.client.screen.FamishedGeneratorScreen;
 import nickwrecks.demonicvessel.client.screen.ModScreens;
 import nickwrecks.demonicvessel.entity.ModEntityTypes;
 import nickwrecks.demonicvessel.entity.render.LesserDemonRenderer;
@@ -31,6 +33,8 @@ public class ClientEvents {
     public static void init(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             MenuScreens.register(ModScreens.BATTERY_CONTAINER.get(), BatteryScreen::new);
+            MenuScreens.register(ModScreens.FAMISHED_GENERATOR_CONTAINER.get(), FamishedGeneratorScreen::new);
+            MenuScreens.register(ModScreens.DISTILLATION_FEEDER_CONTAINER.get(), DistillationFeederScreen::new);
         });
     }
 
@@ -38,11 +42,14 @@ public class ClientEvents {
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntityTypes.LESSER_DEMON.get(), LesserDemonRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.FAMISHED_GENERATOR_BLOCK_ENTITY.get(), FamishedGeneratorRenderer::new);
+
     }
 
     @SubscribeEvent
     public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(FamishedGeneratorJawModel.LAYER_LOCATION, FamishedGeneratorJawModel::createBodyLayer);
+        event.registerLayerDefinition(GemSphereModel.LAYER_LOCATION,GemSphereModel::createBodyLayer);
+
     }
     @SubscribeEvent
     public static void onRegisterSpriteParticle(RegisterParticleProvidersEvent event) {

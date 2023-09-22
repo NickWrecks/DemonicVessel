@@ -3,8 +3,6 @@ package nickwrecks.demonicvessel.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -25,5 +23,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(Tags.Items.EGGS)
                 .add(ModItems.LESSER_DEMON_SPAWN_EGG.get());
+        tag(Tags.Items.GEMS)
+                .add(ModItems.EXPERIENCE_GEM.get());
     }
 }

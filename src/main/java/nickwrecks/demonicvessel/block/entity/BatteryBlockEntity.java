@@ -31,7 +31,7 @@ import static nickwrecks.demonicvessel.block.entity.ModBlockEntities.BATTERY_BLO
 public class BatteryBlockEntity extends BlockEntity {
 
 
-    public static final int BATTERY_CAPACITY = 10000;
+    public static final int BATTERY_CAPACITY = 100000;
     public Direction facing;
     ///D-U-N-S-W-E
     public int[] inputStatusForItem = new int[6];
@@ -88,7 +88,6 @@ public class BatteryBlockEntity extends BlockEntity {
     }
 
     public void tick() {
-            setChanged();
             distributeEnergy();
     }
 

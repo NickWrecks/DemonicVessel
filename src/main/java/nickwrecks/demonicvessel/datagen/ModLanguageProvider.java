@@ -25,7 +25,11 @@ public class ModLanguageProvider extends LanguageProvider{
         add(ModItems.LESSER_SOUL_SYRINGE.get(), "Lesser Soul Syringe");
         add(ModItems.LESSER_DEMON_SPAWN_EGG.get(), "Lesser Demon Spawn Egg");
         add(ModItems.ABBADONIUM_GEAR.get(),"Abbadonium Gear");
-        add(ModItems.ABBADONIUM_JACKET.get(), "Abbadonium Jacket");
+        add(ModItems.ABBADONIUM_JACKET.get(), "Abbadonium Casing");
         add(ModBlocks.FAMISHED_GENERATOR_BLOCK.get(),"Famished Generator");
+        add("demonicvessel.screen.famishedgen","Famished Generator");
+        add(ModItems.EXPERIENCE_GEM.get(),"Experience Gem");
+        add(ModItems.DISTILLATION_FEEDER.get(), "Distillation Feeder");
+        add("demonicvessel.screen.distillationfeeder","Distillation Feeder");
     }
 }

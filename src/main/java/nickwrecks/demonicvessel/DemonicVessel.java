@@ -24,7 +24,7 @@ import nickwrecks.demonicvessel.block.ModBlocks;
 import nickwrecks.demonicvessel.block.entity.ModBlockEntities;
 import nickwrecks.demonicvessel.client.particle.ModParticleTypes;
 import nickwrecks.demonicvessel.client.screen.ModScreens;
-import nickwrecks.demonicvessel.client.screen.ModSounds;
+import nickwrecks.demonicvessel.client.ModSounds;
 import nickwrecks.demonicvessel.entity.ModEntityTypes;
 import nickwrecks.demonicvessel.entity.ai.behaviour.ModMemoryModuleTypes;
 import nickwrecks.demonicvessel.item.ModItems;
@@ -68,6 +68,7 @@ public class DemonicVessel
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::registerTabs);
         modEventBus.addListener(this::commonSetup);
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)

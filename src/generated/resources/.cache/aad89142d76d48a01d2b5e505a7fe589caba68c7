@@ -1,11 +1,12 @@
-// 1.19.4	2023-09-16T00:20:40.618294465	Item Models: demonicvessel
+// 1.19.4	2023-09-22T18:10:33.895938359	Item Models: demonicvessel
 50dfcd4e6d7903722fab2ea0e5c644ec339da92f assets/demonicvessel/models/item/abbadonium_block.json
 41315e744733b830a8be1effd35809b2444c50d2 assets/demonicvessel/models/item/abbadonium_gear.json
 7bf17797e2265d2eff6abaa8ba3688184077eae1 assets/demonicvessel/models/item/abbadonium_ingot.json
 288fb26853e07a461cfc453be5e51355cc2f523b assets/demonicvessel/models/item/abbadonium_jacket.json
 9648a37a51177c20faf1b8a6cf8ccdcbf5f8b716 assets/demonicvessel/models/item/battery_block.json
 2a6ed7ad628ba6d12096b8d8a3a770c5f8a2bbe5 assets/demonicvessel/models/item/creative_generator_block.json
+0fe167f1ab1b977a04781dad5eabce203e0464bf assets/demonicvessel/models/item/distillation_feeder.json
 5c727702fcb5e05571f332fad34ff93401535e4d assets/demonicvessel/models/item/empty_soul_syringe.json
-3700a4415a48f6dca36245fa3012e09b2beb8947 assets/demonicvessel/models/item/famished_generator_block.json
+2a86d1c30ec382c625e63f74765adc0fd23e0fac assets/demonicvessel/models/item/experience_gem.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/demonicvessel/models/item/lesser_demon_spawn_egg.json
 78b59de0201651f7e1f3a0b04dcb71a8461f5519 assets/demonicvessel/models/item/lesser_soul_syringe.json

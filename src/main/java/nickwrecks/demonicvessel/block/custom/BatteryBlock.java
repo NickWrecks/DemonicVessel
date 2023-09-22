@@ -43,7 +43,7 @@ public class BatteryBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public BatteryBlock(Properties pProperties) {
-        super(pProperties);
+        super(pProperties.requiresCorrectToolForDrops());
     }
 
 

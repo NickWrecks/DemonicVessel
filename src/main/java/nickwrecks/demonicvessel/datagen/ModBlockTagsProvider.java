@@ -22,11 +22,13 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.BATTERY_BLOCK.get())
                 .add(ModBlocks.ABBADONIUM_BLOCK.get())
-                .add(ModBlocks.FAMISHED_GENERATOR_BLOCK.get());
+                .add(ModBlocks.FAMISHED_GENERATOR_BLOCK.get())
+                .add(ModBlocks.DISTILLATION_FEEDER_BLOCK.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.ABBADONIUM_BLOCK.get())
                 .add(ModBlocks.BATTERY_BLOCK.get())
-                .add(ModBlocks.FAMISHED_GENERATOR_BLOCK.get());
+                .add(ModBlocks.FAMISHED_GENERATOR_BLOCK.get())
+                .add(ModBlocks.DISTILLATION_FEEDER_BLOCK.get());
 
     }
 }

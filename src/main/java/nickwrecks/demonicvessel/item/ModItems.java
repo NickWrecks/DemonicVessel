@@ -2,7 +2,6 @@ package nickwrecks.demonicvessel.item;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
@@ -21,7 +20,7 @@ public class ModItems {
     public static final RegistryObject<Item> GENERATOR_BLOCK_ITEM = ITEMS.register("creative_generator_block",
             ()-> new BlockItem(CREATIVE_GENERATOR_BLOCK.get(),new Item.Properties()));
 
-    public static final RegistryObject<Item> FAMISHED_GENERATOR_ITEM = ITEMS.register("famished_generator_block",
+    public static final RegistryObject<Item> FAMISHED_GENERATOR_ITEM = ITEMS.register("famished_generator_item",
             ()-> new BlockItem(ModBlocks.FAMISHED_GENERATOR_BLOCK.get(),new Item.Properties()));
     public static final RegistryObject<Item> BATTERY_BLOCK_ITEM = ITEMS.register("battery_block",
             ()-> new BatteryBlockItem(BATTERY_BLOCK.get(),new Item.Properties()));
@@ -42,6 +41,12 @@ public class ModItems {
 
     public static final RegistryObject<Item> LESSER_DEMON_SPAWN_EGG = ITEMS.register("lesser_demon_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntityTypes.LESSER_DEMON,0x871394,0x000000,new Item.Properties()));
+
+    public static final RegistryObject<Item> EXPERIENCE_GEM = ITEMS.register("experience_gem",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DISTILLATION_FEEDER = ITEMS.register("distillation_feeder",
+            ()-> new BlockItem(ModBlocks.DISTILLATION_FEEDER_BLOCK.get(), new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

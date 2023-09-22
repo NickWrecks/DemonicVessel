@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "G": {
+      "tag": "forge:glass_panes"
+    }
+  },
+  "pattern": [
+    " G ",
+    "GDG",
+    " G "
+  ],
+  "result": {
+    "item": "demonicvessel:experience_gem"
+  },
+  "show_notification": true
+}

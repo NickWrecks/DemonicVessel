@@ -6,6 +6,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import nickwrecks.demonicvessel.item.ModItems;
 
@@ -51,6 +52,33 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('R',Items.REDSTONE_BLOCK)
                 .define('J',ModItems.ABBADONIUM_JACKET.get())
                 .unlockedBy("has_abbadonium_jacket", has(ModItems.ABBADONIUM_JACKET.get()))
+                .save(pWriter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE,ModItems.FAMISHED_GENERATOR_ITEM.get())
+                .pattern("I I")
+                .pattern("IRI")
+                .pattern(" J ")
+                .define('I',Items.IRON_INGOT)
+                .define('R',Items.REDSTONE_BLOCK)
+                .define('J',ModItems.ABBADONIUM_JACKET.get())
+                .unlockedBy("has_abbadonium_jacket", has(ModItems.ABBADONIUM_JACKET.get()))
+                .save(pWriter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,ModItems.EXPERIENCE_GEM.get())
+                .pattern(" G ")
+                .pattern("GDG")
+                .pattern(" G ")
+                .define('G', Tags.Items.GLASS_PANES)
+                .define('D', Items.DIAMOND)
+                .unlockedBy("has_abbadonium",has(ModItems.ABBADONIUM_BLOCK.get()))
+                .save(pWriter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.DISTILLATION_FEEDER.get())
+                .pattern("GCG")
+                .pattern("RGR")
+                .pattern("QQQ")
+                .define('G',Tags.Items.GLASS)
+                .define('R',Items.REPEATER)
+                .define('C',Items.COMPOSTER)
+                .define('Q',Items.QUARTZ_BLOCK)
+                .unlockedBy("has_famished",has(ModItems.FAMISHED_GENERATOR_ITEM.get()))
                 .save(pWriter);
     }
 }

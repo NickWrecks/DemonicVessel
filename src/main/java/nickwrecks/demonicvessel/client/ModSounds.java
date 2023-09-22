@@ -1,4 +1,4 @@
-package nickwrecks.demonicvessel.client.screen;
+package nickwrecks.demonicvessel.client;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;

@@ -26,6 +26,7 @@ public class ModBlockstateProvider extends BlockStateProvider {
         horizontalBlock(ModBlocks.FAMISHED_GENERATOR_BLOCK.get(), new ModelFile.ExistingModelFile(new ResourceLocation(DemonicVessel.MODID,"block/famished_generator"), existingFileHelper));
         registerBattery();
         simpleBlock(ModBlocks.ABBADONIUM_BLOCK.get());
+        horizontalBlock(ModBlocks.DISTILLATION_FEEDER_BLOCK.get(), new ModelFile.ExistingModelFile(new ResourceLocation(DemonicVessel.MODID,"block/distillation_feeder"),existingFileHelper));
     }
 
     private void registerBattery(){

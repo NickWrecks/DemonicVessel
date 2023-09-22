@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "demonicvessel:block/distillation_feeder",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "demonicvessel:block/distillation_feeder"
+    },
+    "facing=south": {
+      "model": "demonicvessel:block/distillation_feeder",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "demonicvessel:block/distillation_feeder",
+      "y": 270
+    }
+  }
+}

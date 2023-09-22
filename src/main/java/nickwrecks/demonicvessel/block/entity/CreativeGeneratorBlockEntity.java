@@ -45,9 +45,7 @@ public class CreativeGeneratorBlockEntity extends BlockEntity{
         energy.invalidate();
     }
     public void tickServer() {
-            energyStorage.addEnergy(100);
-            setChanged();
-        BlockState blockState = level.getBlockState(worldPosition);
+        energyStorage.addEnergy(100);
         sendOutPower();
     }
 

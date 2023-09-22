@@ -8,7 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import nickwrecks.demonicvessel.client.screen.ModSounds;
+import nickwrecks.demonicvessel.client.ModSounds;
 import nickwrecks.demonicvessel.entity.custom.LesserDemonEntity;
 
 public class LesserLaser extends Behavior<LesserDemonEntity> {

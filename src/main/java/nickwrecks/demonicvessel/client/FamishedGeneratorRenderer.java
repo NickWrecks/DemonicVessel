@@ -19,32 +19,46 @@ import nickwrecks.demonicvessel.block.entity.FamishedGeneratorBlockEntity;
 public class FamishedGeneratorRenderer implements BlockEntityRenderer<FamishedGeneratorBlockEntity> {
 
     public static Material JAW_LOCATION = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation(DemonicVessel.MODID, "block/famished_generator_jaw"));
+
+    public static Material GEM_LOCATION = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation(DemonicVessel.MODID, "block/gem_texture"));
     private final FamishedGeneratorJawModel jawModel1;
     private final FamishedGeneratorJawModel jawModel2;
+    private final GemSphereModel gemModel;
 
     public FamishedGeneratorRenderer(BlockEntityRendererProvider.Context pContext) {
         this.jawModel1 = new FamishedGeneratorJawModel(pContext.bakeLayer(FamishedGeneratorJawModel.LAYER_LOCATION));
         this.jawModel2 = new FamishedGeneratorJawModel(pContext.bakeLayer(FamishedGeneratorJawModel.LAYER_LOCATION));
+        this.gemModel = new GemSphereModel(pContext.bakeLayer(GemSphereModel.LAYER_LOCATION));
     }
 
     @Override
     public void render(FamishedGeneratorBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
         pPoseStack.pushPose();
-
+        pPoseStack.pushPose();
         if(pBlockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING) == Direction.WEST || pBlockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING) == Direction.EAST) {
             pPoseStack.translate(0.5f,0.44f,0.55f);
             pPoseStack.mulPose(Axis.YP.rotationDegrees(90));}
         else
             pPoseStack.translate(0.45f,0.44f,0.5f);
         this.jawModel1.setupAnim(pBlockEntity.time);
-        this.jawModel1.renderToBuffer(pPoseStack,JAW_LOCATION.buffer(pBufferSource,RenderType::entityCutoutNoCull), LightTexture.FULL_BRIGHT,pPackedOverlay,1.0f,1.0f,1.0f,1.0f);
+        this.jawModel1.renderToBuffer(pPoseStack,JAW_LOCATION.buffer(pBufferSource,RenderType::entityCutoutNoCull), pPackedLight,pPackedOverlay,1.0f,1.0f,1.0f,1.0f);
 
         pPoseStack.mulPose(Axis.YP.rotationDegrees(180));
         pPoseStack.translate(-0.10f,0.0f,0.0f);
         this.jawModel2.setupAnim(pBlockEntity.time);
-        this.jawModel2.renderToBuffer(pPoseStack,JAW_LOCATION.buffer(pBufferSource,RenderType::entityCutoutNoCull), LightTexture.FULL_BRIGHT,pPackedOverlay,1.0f,1.0f,1.0f,1.0f);
+        this.jawModel2.renderToBuffer(pPoseStack,JAW_LOCATION.buffer(pBufferSource,RenderType::entityCutoutNoCull),pPackedLight,pPackedOverlay,1.0f,1.0f,1.0f,1.0f);
 
         pPoseStack.popPose();
-
+        if(pBlockEntity.hasGem) {
+            pPoseStack.translate(0.5f, 0.5f, 0.49f);
+            pPoseStack.scale(0.5f, 0.5f, 0.5f);
+                this.gemModel.setupAnim(pBlockEntity.time);
+            if(pBlockEntity.collecting) {
+                this.gemModel.renderToBuffer(pPoseStack, GEM_LOCATION.buffer(pBufferSource, RenderType::entitySolid), LightTexture.FULL_BRIGHT, pPackedOverlay, 1.0f, 1.0f, 1.0f, 1.0f);
+            }
+            else
+                this.gemModel.renderToBuffer(pPoseStack, GEM_LOCATION.buffer(pBufferSource, RenderType::entitySolid), LightTexture.FULL_BRIGHT, pPackedOverlay, 0.2f, 0.1f, 0.1f, 1.0f);
+        }
+        pPoseStack.popPose();
     }
 }

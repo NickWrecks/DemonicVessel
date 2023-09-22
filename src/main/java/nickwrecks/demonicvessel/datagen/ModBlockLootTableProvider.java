@@ -18,6 +18,7 @@ public class ModBlockLootTableProvider extends VanillaBlockLoot {
         this.add(ModBlocks.BATTERY_BLOCK.get(),noDrop());
         this.dropSelf(ModBlocks.ABBADONIUM_BLOCK.get());
         this.dropSelf(ModBlocks.FAMISHED_GENERATOR_BLOCK.get());
+        this.dropSelf(ModBlocks.DISTILLATION_FEEDER_BLOCK.get());
     }
 
     @Override

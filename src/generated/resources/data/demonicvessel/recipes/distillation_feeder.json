@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "minecraft:composter"
+    },
+    "G": {
+      "tag": "forge:glass"
+    },
+    "Q": {
+      "item": "minecraft:quartz_block"
+    },
+    "R": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "pattern": [
+    "GCG",
+    "RGR",
+    "QQQ"
+  ],
+  "result": {
+    "item": "demonicvessel:distillation_feeder"
+  },
+  "show_notification": true
+}

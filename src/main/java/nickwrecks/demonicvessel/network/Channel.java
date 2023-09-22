@@ -33,6 +33,11 @@ public class Channel {
                 .encoder(BatteryConfigToClient::toBytes)
                 .consumerMainThread(BatteryConfigToClient::handle)
                 .add();
+        net.messageBuilder(DistillationFeederToClient.class,id(),NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(DistillationFeederToClient::new)
+                .encoder(DistillationFeederToClient::toBytes)
+                .consumerMainThread(DistillationFeederToClient::handle)
+                .add();
     }
     public static <MSG> void sendToServer(MSG message) {
         INSTANCE.sendToServer(message);
