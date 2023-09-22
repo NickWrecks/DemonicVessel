@@ -72,6 +72,7 @@ public class BatteryBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("Energy", rawDemonicEnergyStorage.serializeNBT());
         pTag.put("InputStatus", new IntArrayTag(inputStatus));
+
         super.saveAdditional(pTag);
     }
 

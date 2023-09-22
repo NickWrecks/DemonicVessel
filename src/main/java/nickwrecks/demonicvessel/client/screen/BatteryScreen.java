@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import nickwrecks.demonicvessel.DemonicVessel;
 import nickwrecks.demonicvessel.block.entity.BatteryBlockEntity;
+import nickwrecks.demonicvessel.client.screen.components.InformationTab;
 import nickwrecks.demonicvessel.network.BatteryConfigToServer;
 import nickwrecks.demonicvessel.network.Channel;
 
@@ -27,39 +28,25 @@ public class BatteryScreen extends AbstractContainerScreen<BatteryMenu> {
     private static final int ENERGY_WIDTH = 160;
     private static final int ENERGY_TOP = 17;
     private static final int ENERGY_HEIGHT = 52;
-    private static final int INFORMATION_WIDTH_MIN = 16;
-    private static final int INFORMATION_HEIGHT_MIN = 18;
-    private static final int INFORMATION_WIDTH_MAX = 84;
-    private static final int INFORMATION_HEIGHT_MAX = 161;
-
-    private int informationHeight = INFORMATION_HEIGHT_MIN;
-    private int informationWidth = INFORMATION_WIDTH_MIN;
     private static final int CONFIG_WIDTH_MIN = 16;
     private static final int CONFIG_HEIGHT_MIN = 18;
     private static final int CONFIG_WIDTH_MAX = 84;
     private static final int CONFIG_HEIGHT_MAX = 161;
     private int configHeight = CONFIG_HEIGHT_MIN;
     private int configWidth = CONFIG_WIDTH_MIN;
-    private String info = new String("This battery is capable of storing up to " + BatteryBlockEntity.BATTERY_CAPACITY + " units of RDE. The input and output of energy on any given side can be configured via the panel on the left.");
-    private boolean openInformation = false;
     private boolean openConfig = false;
     private static final ResourceLocation GUI = new ResourceLocation(DemonicVessel.MODID, "textures/gui/battery_base.png");
 
-    private static final ResourceLocation INFO = new ResourceLocation(DemonicVessel.MODID, "textures/gui/info.png");
-
-    private static final ResourceLocation INFO_CLOSED = new ResourceLocation(DemonicVessel.MODID, "textures/gui/info_closed.png");
     private static final ResourceLocation CONFIGURATION = new ResourceLocation(DemonicVessel.MODID, "textures/gui/configuration.png");
     private static final ResourceLocation CONFIGURATION_CLOSED = new ResourceLocation(DemonicVessel.MODID, "textures/gui/configuration_closed.png");
+    private static InformationTab informationTab;
+    private String info = new String("This battery is capable of storing up to " + BatteryBlockEntity.BATTERY_CAPACITY + " units of RDE. The input and output of energy on any given side can be configured via the panel on the left.");
     public int[] config = {0,0,0,0,0,0};
     @Override
     protected void init() {
         super.init();
-        addRenderableWidget(new ImageButton(leftPos + this.imageWidth, topPos + 4, 16, 16, 84, 0, 0, INFO, new Button.OnPress() {
-            @Override
-            public void onPress(Button pButton) {
-            if(openInformation) openInformation = false;
-            else openInformation = true;
-            }}));
+        informationTab = new InformationTab(info,leftPos,topPos,imageWidth);
+        addRenderableWidget(informationTab.button);
         addRenderableWidget(new ImageButton(leftPos - 15, topPos + 3, 16, 16, 84, 0, 0, CONFIGURATION, new Button.OnPress() {
             @Override
             public void onPress(Button pButton) {
@@ -79,22 +66,8 @@ public class BatteryScreen extends AbstractContainerScreen<BatteryMenu> {
         int p = (int) (((power/(float) BatteryBlockEntity.BATTERY_CAPACITY)) * ENERGY_HEIGHT);
         fillGradient(pPoseStack,leftPos + ENERGY_LEFT, topPos + ENERGY_TOP + ENERGY_HEIGHT - p  , leftPos + ENERGY_LEFT + ENERGY_WIDTH, topPos + ENERGY_TOP + ENERGY_HEIGHT, 0xffff0000, 0xff000000);
         fill(pPoseStack,leftPos + ENERGY_LEFT, topPos + ENERGY_TOP, leftPos + ENERGY_LEFT + ENERGY_WIDTH, topPos + ENERGY_TOP + ENERGY_HEIGHT - p, 0xff330000);
-        RenderSystem.setShaderTexture(0, (informationHeight==INFORMATION_HEIGHT_MIN && informationWidth==INFORMATION_WIDTH_MIN) ? INFO_CLOSED :INFO);
-        blit(pPoseStack, leftPos+this.imageWidth, topPos+3, 0,0, informationWidth,informationHeight);
         RenderSystem.setShaderTexture(0, (configHeight==CONFIG_HEIGHT_MIN && configWidth == CONFIG_WIDTH_MIN) ? CONFIGURATION_CLOSED : CONFIGURATION);
         blit(pPoseStack, leftPos-configWidth,topPos+2,0,0, configWidth, configHeight);
-        if (openInformation) {
-            if(informationHeight < INFORMATION_HEIGHT_MAX) informationHeight += 12;
-            if(informationHeight > INFORMATION_HEIGHT_MAX) informationHeight = INFORMATION_HEIGHT_MAX;
-            if(informationWidth < INFORMATION_WIDTH_MAX && informationHeight == INFORMATION_HEIGHT_MAX) informationWidth += 8;
-            if(informationWidth > INFORMATION_WIDTH_MAX) informationWidth = INFORMATION_WIDTH_MAX;
-        }
-        else {
-            if(informationHeight > INFORMATION_HEIGHT_MIN && informationWidth == INFORMATION_WIDTH_MIN) informationHeight -= 12;
-            if(informationHeight < INFORMATION_HEIGHT_MIN) informationHeight = INFORMATION_HEIGHT_MIN;
-            if(informationWidth > INFORMATION_WIDTH_MIN) informationWidth -= 8;
-            if(informationWidth < INFORMATION_WIDTH_MIN) informationWidth = INFORMATION_WIDTH_MIN;
-        }
         if (openConfig) {
             if(configHeight < CONFIG_HEIGHT_MAX) configHeight += 12;
             if(configHeight > CONFIG_HEIGHT_MAX) configHeight = CONFIG_HEIGHT_MAX;
@@ -107,6 +80,7 @@ public class BatteryScreen extends AbstractContainerScreen<BatteryMenu> {
             if(configWidth > CONFIG_WIDTH_MIN) configWidth -= 8;
             if(configWidth < CONFIG_WIDTH_MIN) configWidth = CONFIG_WIDTH_MIN;
         }
+        informationTab.draw(pPoseStack);
     }
     private final static int configOffsetLeft = 49;
 
@@ -169,14 +143,7 @@ public class BatteryScreen extends AbstractContainerScreen<BatteryMenu> {
         if(configWidth == CONFIG_WIDTH_MAX && configHeight == CONFIG_HEIGHT_MAX) {
             this.font.draw(pPoseStack, Component.translatable("Configuration"), -84, 8, 0x000000);
         }
-
-        int numberOfLines = font.split(Component.literal(info), 80).size();
-        if (informationWidth == INFORMATION_WIDTH_MAX && informationHeight == INFORMATION_HEIGHT_MAX) {
-            this.font.draw(pPoseStack,Component.translatable("Information"),this.imageWidth+35,10,0x000000);
-            for(int i = 0; i < numberOfLines; i++)
-          this.font.draw(pPoseStack, font.split(Component.literal(info), 80).get(i), this.imageWidth+INFORMATION_WIDTH_MIN*2, 32+ i * font.lineHeight, 0x000000);
-        }
-
+        informationTab.drawInfo(pPoseStack,this.font);
     }
 
     @Override

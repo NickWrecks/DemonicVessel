@@ -217,6 +217,8 @@ public class FamishedGeneratorBlockEntity extends BlockEntity {
         pTag.putInt("GemBreakerTimer",gemBreakerTimer);
         pTag.putBoolean("hasGem",hasGem);
         pTag.putBoolean("collecting",collecting);
+        pTag.put("Items",items.serializeNBT());
+
     }
 
 
@@ -248,6 +250,8 @@ public class FamishedGeneratorBlockEntity extends BlockEntity {
             hasGem = pTag.getBoolean("hasGem");
         if(pTag.contains("collecting"))
             collecting = pTag.getBoolean("collecting");
+        if(pTag.contains("Items"))
+            items.deserializeNBT(pTag.getCompound("Items"));
     }
 
 

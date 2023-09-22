@@ -2,6 +2,7 @@ package nickwrecks.demonicvessel.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -84,4 +85,14 @@ public class DistillationFeederBlockEntity extends BlockEntity {
         return items;
     }
 
+    @Override
+    protected void saveAdditional(CompoundTag pTag) {
+       pTag.put("Items",items.serializeNBT());
+    }
+
+    @Override
+    public void load(CompoundTag pTag) {
+        if(pTag.contains("Items"))
+            items.deserializeNBT(pTag.getCompound("Items"));
+    }
 }
