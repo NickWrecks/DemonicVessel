@@ -46,7 +46,8 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> DISTILLATION_FEEDER = ITEMS.register("distillation_feeder",
             ()-> new BlockItem(ModBlocks.DISTILLATION_FEEDER_BLOCK.get(), new Item.Properties()));
-
+    public static final RegistryObject<Item> CABLE_ITEM = ITEMS.register("cable",
+            ()-> new BlockItem(ModBlocks.CABLE.get(), new Item.Properties()));
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

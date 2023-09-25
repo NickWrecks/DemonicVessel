@@ -39,6 +39,7 @@ public class BatteryConfigToServer {
                 BlockTools.makeInputStatusRelative(blockEntity.facing,blockEntity.inputStatus,this.config);
                 BlockTools.makeInputStatusAbsolute(blockEntity.facing,blockEntity.inputStatusForItem, blockEntity.inputStatus);
                 blockEntity.requestModelDataUpdate();
+                blockEntity.setChanged();
                 context.getSender().getLevel().sendBlockUpdated(pos, blockEntity.getBlockState(),blockEntity.getBlockState(), Block.UPDATE_ALL);
             }
         });

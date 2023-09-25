@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 import static nickwrecks.demonicvessel.block.entity.ModBlockEntities.BATTERY_BLOCK_ENTITY;
+import static nickwrecks.demonicvessel.energy.RawDemonicEnergyStorage.ENERGY_CAPABILITY;
 
 public class BatteryBlockEntity extends BlockEntity {
 
@@ -55,8 +56,7 @@ public class BatteryBlockEntity extends BlockEntity {
     private final RawDemonicEnergyStorage rawDemonicEnergyStorage = createEnergy();
     private final LazyOptional<IRawDemonicEnergyStorage> rawDemonicEnergy = LazyOptional.of(() -> rawDemonicEnergyStorage);
 
-    public static Capability<IRawDemonicEnergyStorage> ENERGY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-    });
+
 
 
     private RawDemonicEnergyStorage createEnergy() {
@@ -71,7 +71,7 @@ public class BatteryBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("Energy", rawDemonicEnergyStorage.serializeNBT());
-        pTag.put("InputStatus", new IntArrayTag(inputStatus));
+        saveClientData(pTag);
 
         super.saveAdditional(pTag);
     }
@@ -81,11 +81,7 @@ public class BatteryBlockEntity extends BlockEntity {
         super.load(pTag);
         if (pTag.contains("Energy"))
             rawDemonicEnergyStorage.deserializeNBT(pTag.get("Energy"));
-        if(pTag.contains("InputStatus")) {
-            if(!((pTag.get("InputStatus")) instanceof IntArrayTag))
-                throw new IllegalArgumentException("Cannot deserialize to a value that isnt the default implementation");
-            else this.inputStatus = pTag.getIntArray("InputStatus");
-        }
+        loadClientData(pTag);
     }
 
     public void tick() {
@@ -126,7 +122,8 @@ public class BatteryBlockEntity extends BlockEntity {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ENERGY_CAPABILITY) {
-            if (inputStatus[side.get3DDataValue()] == 1 || inputStatus[side.get3DDataValue()]==3)
+            if(side == null)  return super.getCapability(cap, side);
+            else if (inputStatus[side.get3DDataValue()] == 1 || inputStatus[side.get3DDataValue()]==3)
                 return rawDemonicEnergy.cast();
         }
 
@@ -159,6 +156,7 @@ public class BatteryBlockEntity extends BlockEntity {
         for(int i=0;i<=5;i++) oldInputStatus[i] = inputStatus[i];
 
         CompoundTag tag = pkt.getTag();
+        if(tag!=null)
         handleUpdateTag(tag);
 
         if (oldInputStatus != inputStatus) {
@@ -179,7 +177,11 @@ public class BatteryBlockEntity extends BlockEntity {
     private void saveClientData(CompoundTag tag) {
         tag.putIntArray("InputStatus", inputStatus);
     }
-    private void loadClientData(CompoundTag tag) {
-        inputStatus = tag.getIntArray("InputStatus");
+    private void loadClientData(CompoundTag pTag) {
+        if(pTag.contains("InputStatus")) {
+            if(!((pTag.get("InputStatus")) instanceof IntArrayTag))
+                throw new IllegalArgumentException("Cannot deserialize to a value that isnt the default implementation");
+            else this.inputStatus = pTag.getIntArray("InputStatus");
+        }
     }
 }

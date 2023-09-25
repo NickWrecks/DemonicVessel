@@ -1,9 +1,10 @@
-// 1.19.4	2023-09-22T18:10:33.895938359	Item Models: demonicvessel
+// 1.19.4	2023-09-24T16:29:36.639041188	Item Models: demonicvessel
 50dfcd4e6d7903722fab2ea0e5c644ec339da92f assets/demonicvessel/models/item/abbadonium_block.json
 41315e744733b830a8be1effd35809b2444c50d2 assets/demonicvessel/models/item/abbadonium_gear.json
 7bf17797e2265d2eff6abaa8ba3688184077eae1 assets/demonicvessel/models/item/abbadonium_ingot.json
 288fb26853e07a461cfc453be5e51355cc2f523b assets/demonicvessel/models/item/abbadonium_jacket.json
 9648a37a51177c20faf1b8a6cf8ccdcbf5f8b716 assets/demonicvessel/models/item/battery_block.json
+4dc45c65d629ba5947df70afdf817bced3336d80 assets/demonicvessel/models/item/cable.json
 2a6ed7ad628ba6d12096b8d8a3a770c5f8a2bbe5 assets/demonicvessel/models/item/creative_generator_block.json
 0fe167f1ab1b977a04781dad5eabce203e0464bf assets/demonicvessel/models/item/distillation_feeder.json
 5c727702fcb5e05571f332fad34ff93401535e4d assets/demonicvessel/models/item/empty_soul_syringe.json

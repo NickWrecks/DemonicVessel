@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
+import static nickwrecks.demonicvessel.energy.RawDemonicEnergyStorage.ENERGY_CAPABILITY;
 
 public class CreativeGeneratorBlockEntity extends BlockEntity{
     protected final int BASE_PROCESS_TICK = 20;
@@ -24,7 +25,6 @@ public class CreativeGeneratorBlockEntity extends BlockEntity{
 
     private final RawDemonicEnergyStorage energyStorage = createEnergy();
     private final LazyOptional<IRawDemonicEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
-    public static Capability<IRawDemonicEnergyStorage> ENERGY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
 
     public CreativeGeneratorBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CREATIVE_GENERATOR_BLOCK_ENTITY.get(), pPos, pBlockState);

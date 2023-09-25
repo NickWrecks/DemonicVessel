@@ -24,8 +24,6 @@ public class BatteryBlockItem extends BlockItem {
     public BatteryBlockItem(Block pBlock, Properties pProperties) {
         super(pBlock, pProperties);
     }
-    public static Capability<IRawDemonicEnergyStorage> ENERGY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-    });
 
 
     @Override

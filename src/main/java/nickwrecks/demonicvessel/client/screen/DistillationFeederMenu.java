@@ -27,40 +27,31 @@ public class DistillationFeederMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(pIndex);
-        if (slot.hasItem()) {
-            ItemStack stack = slot.getItem();
-            itemstack = stack.copy();
-            if (pIndex < SLOT_COUNT) {
-                if (!this.moveItemStackTo(stack, SLOT_COUNT, Inventory.INVENTORY_SIZE + SLOT_COUNT, true)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-            if (!this.moveItemStackTo(stack, SLOT, SLOT+1, false)) {
-                if (pIndex < 27 + SLOT_COUNT) {
-                    if (!this.moveItemStackTo(stack, 27 + SLOT_COUNT, 36 + SLOT_COUNT, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (pIndex < Inventory.INVENTORY_SIZE + SLOT_COUNT && !this.moveItemStackTo(stack, SLOT_COUNT, 27 + SLOT_COUNT, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-
-            if (stack.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-
-            if (stack.getCount() == itemstack.getCount()) {
+        Slot sourceSlot = this.slots.get(pIndex);
+        if(sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;
+        ItemStack sourceStack = sourceSlot.getItem();
+        ItemStack copyStack = sourceStack.copy();
+        if(pIndex >= SLOT_COUNT) {
+            if(!moveItemStackTo(sourceStack, SLOT, SLOT+1,false)) {
                 return ItemStack.EMPTY;
             }
-
-            slot.onTake(pPlayer, stack);
+        }
+        else if(pIndex < SLOT + SLOT_COUNT) {
+            if(!moveItemStackTo(sourceStack,SLOT_COUNT, SLOT_COUNT+Inventory.INVENTORY_SIZE,false)) {
+                return ItemStack.EMPTY;
+            }
+        }
+        else  {
+            System.out.println("Invalid slot index:" + pIndex);
+            return ItemStack.EMPTY;
         }
 
-        return itemstack;
+        if(sourceStack.getCount() == 0)
+            sourceSlot.set(ItemStack.EMPTY);
+        else sourceSlot.setChanged();
+
+        sourceSlot.onTake(pPlayer,sourceStack);
+        return copyStack;
     }
 
     @Override

@@ -96,9 +96,11 @@ public class FamishedGeneratorBlock extends BaseEntityBlock {
                         famishedGen.hasGem = true;
                         itemStack.shrink(1);
                         famishedGen.gemBreakerTimer = 200;
+                        famishedGen.setChanged();
                         pLevel.sendBlockUpdated(pPos, pState, pState, Block.UPDATE_ALL);
                     } else if (famishedGen.hasGem && itemStack.isEmpty() && pPlayer.isCrouching()) {
                         famishedGen.collecting = !famishedGen.collecting;
+                        famishedGen.setChanged();
                         pLevel.sendBlockUpdated(pPos, pState, pState, Block.UPDATE_ALL);
                     } else {
                         MenuProvider menuProvider = new MenuProvider() {

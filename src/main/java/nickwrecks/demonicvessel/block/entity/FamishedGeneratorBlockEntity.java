@@ -35,6 +35,8 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+import static nickwrecks.demonicvessel.energy.RawDemonicEnergyStorage.ENERGY_CAPABILITY;
+
 public class FamishedGeneratorBlockEntity extends BlockEntity {
 
     public static final int FAMISHED_GEN_CAPACITY = 10000;
@@ -60,10 +62,6 @@ public class FamishedGeneratorBlockEntity extends BlockEntity {
             }
         };
     }
-    public static Capability<IRawDemonicEnergyStorage> ENERGY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-    });
-
-
     private static final int SLOT_COUNT = 1;
 
     private final ItemStackHandler items = createItemHandler();
@@ -176,24 +174,7 @@ public class FamishedGeneratorBlockEntity extends BlockEntity {
         return items;
     }
 
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        tag.putBoolean("hasGem",hasGem);
-        tag.putBoolean("collecting",collecting);
-        return tag;
-    }
 
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        if(tag!=null){
-         if(tag.contains("hasGem"))
-             hasGem = tag.getBoolean("hasGem");
-         if(tag.contains("collecting"))
-             collecting = tag.getBoolean("collecting");
-        }
-
-    }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
@@ -221,16 +202,6 @@ public class FamishedGeneratorBlockEntity extends BlockEntity {
 
     }
 
-
-    public int getStoredEnergy() {
-        return rawDemonicEnergyStorage.getEnergyStored();
-    }
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
     @Override
     public void load(CompoundTag pTag) {
 
@@ -253,8 +224,23 @@ public class FamishedGeneratorBlockEntity extends BlockEntity {
         if(pTag.contains("Items"))
             items.deserializeNBT(pTag.getCompound("Items"));
     }
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = super.getUpdateTag();
+        tag.putBoolean("hasGem",hasGem);
+        tag.putBoolean("collecting",collecting);
+        return tag;
+    }
 
-
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        if(tag !=null) {
+            if(tag.contains("hasGem"))
+                hasGem = tag.getBoolean("hasGem");
+            if(tag.contains("collecting"))
+                collecting = tag.getBoolean("collecting");
+        }
+    }
 
     @Override
     public void invalidateCaps() {
@@ -267,6 +253,20 @@ public class FamishedGeneratorBlockEntity extends BlockEntity {
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if(cap== ForgeCapabilities.ITEM_HANDLER)
             return itemHandler.cast();
-        else return super.getCapability(cap,side);
+        if(cap == ENERGY_CAPABILITY)
+            if(side == Direction.DOWN)
+                return rawDemonicEnergy.cast();
+         return super.getCapability(cap,side);
     }
+
+
+    public int getStoredEnergy() {
+        return rawDemonicEnergyStorage.getEnergyStored();
+    }
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
 }

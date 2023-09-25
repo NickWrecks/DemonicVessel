@@ -18,6 +18,8 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(FamishedGeneratorBlockEntity::new, FAMISHED_GENERATOR_BLOCK.get()).build(null));
     public static final RegistryObject<BlockEntityType<DistillationFeederBlockEntity>> DISTILLATION_FEEDER_BLOCK_ENTITY = BLOCK_ENTITIES.register("distillation_feeder_block_entity",
             () -> BlockEntityType.Builder.of(DistillationFeederBlockEntity::new, DISTILLATION_FEEDER_BLOCK.get()).build(null));
+    public static final RegistryObject<BlockEntityType<CableBlockEntity>> CABLE_BLOCK_ENTITY = BLOCK_ENTITIES.register("cable_block_entity",
+            () -> BlockEntityType.Builder.of(CableBlockEntity::new, CABLE.get()).build(null));
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

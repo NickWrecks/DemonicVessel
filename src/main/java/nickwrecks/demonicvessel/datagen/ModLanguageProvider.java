@@ -31,5 +31,6 @@ public class ModLanguageProvider extends LanguageProvider{
         add(ModItems.EXPERIENCE_GEM.get(),"Experience Gem");
         add(ModItems.DISTILLATION_FEEDER.get(), "Distillation Feeder");
         add("demonicvessel.screen.distillationfeeder","Distillation Feeder");
+        add(ModItems.CABLE_ITEM.get(), "Cable");
     }
 }

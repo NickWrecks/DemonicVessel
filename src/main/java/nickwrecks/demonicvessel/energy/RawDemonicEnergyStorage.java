@@ -3,6 +3,9 @@ package nickwrecks.demonicvessel.energy;
 
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.Tag;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 
 public class RawDemonicEnergyStorage implements IRawDemonicEnergyStorage {
 
@@ -122,4 +125,6 @@ public class RawDemonicEnergyStorage implements IRawDemonicEnergyStorage {
             throw new IllegalArgumentException("Can not deserialize to an instance that isn't the default implementation");
         this.energy = intNbt.getAsInt();
     }
+    public static Capability<IRawDemonicEnergyStorage> ENERGY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+    });
 }

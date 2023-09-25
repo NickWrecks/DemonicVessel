@@ -3,6 +3,8 @@ package nickwrecks.demonicvessel.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
@@ -27,8 +29,31 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onModelRegistryEvent(ModelEvent.RegisterGeometryLoaders event) {
         event.register(BatteryModelLoader.BATTERY_LOADER.getPath(), new BatteryModelLoader());
+        event.register(CableModelLoader.CABLE_LOADER.getPath(), new CableModelLoader());
     }
+    @SubscribeEvent
+    public static void onAdditionalRegistryEvent(ModelEvent.RegisterAdditional event) {
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_down_none"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_down_cabled"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_down_connected"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_up_none"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_up_cabled"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_up_connected"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_north_none"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_north_cabled"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_north_connected"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_south_none"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_south_cabled"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_south_connected"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_west_none"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_west_cabled"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_west_connected"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_east_none"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_east_cabled"));
+        event.register(new ResourceLocation(DemonicVessel.MODID, "block/cable/cable_east_connected"));
 
+
+    }
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {

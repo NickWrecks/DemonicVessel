@@ -23,12 +23,14 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.BATTERY_BLOCK.get())
                 .add(ModBlocks.ABBADONIUM_BLOCK.get())
                 .add(ModBlocks.FAMISHED_GENERATOR_BLOCK.get())
-                .add(ModBlocks.DISTILLATION_FEEDER_BLOCK.get());
+                .add(ModBlocks.DISTILLATION_FEEDER_BLOCK.get())
+                .add(ModBlocks.CABLE.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.ABBADONIUM_BLOCK.get())
                 .add(ModBlocks.BATTERY_BLOCK.get())
                 .add(ModBlocks.FAMISHED_GENERATOR_BLOCK.get())
-                .add(ModBlocks.DISTILLATION_FEEDER_BLOCK.get());
+                .add(ModBlocks.DISTILLATION_FEEDER_BLOCK.get())
+                .add(ModBlocks.CABLE.get());
 
     }
 }

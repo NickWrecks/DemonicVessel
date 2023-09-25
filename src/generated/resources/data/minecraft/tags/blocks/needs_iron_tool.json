@@ -3,6 +3,7 @@
     "demonicvessel:abbadonium_block",
     "demonicvessel:battery_block",
     "demonicvessel:famished_generator_block",
-    "demonicvessel:distillation_feeder_block"
+    "demonicvessel:distillation_feeder_block",
+    "demonicvessel:cable"
   ]
 }

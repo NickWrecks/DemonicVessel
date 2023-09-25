@@ -1,0 +1,65 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"1": "demonicvessel:block/connected_texture",
+		"particle": "demonicvessel:block/battery_none"
+	},
+	"elements": [
+		{
+			"name": "southCable",
+			"from": [6, 6, 10],
+			"to": [10, 10, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6, 0, 6]},
+			"faces": {
+				"north": {"uv": [0, 9, 2, 11], "texture": "#1"},
+				"east": {"uv": [7, 7, 9, 9], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [2.5, 9.5, 4.5, 11.5], "texture": "#1"},
+				"west": {"uv": [8, 2.5, 10, 4.5], "rotation": 270, "texture": "#1"},
+				"up": {"uv": [6.5, 9, 4.5, 7], "rotation": 180, "texture": "#1"},
+				"down": {"uv": [10, 0, 8, 2], "rotation": 180, "texture": "#1"}
+			}
+		},
+		{
+			"name": "southNeck",
+			"from": [5, 5, 14],
+			"to": [11, 11, 15],
+			"faces": {
+				"north": {"uv": [4.5, 0, 7.5, 3], "texture": "#1"},
+				"east": {"uv": [9.5, 8, 12.5, 8.5], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [4.5, 3.5, 7.5, 6.5], "texture": "#1"},
+				"west": {"uv": [10.25, 0, 13.25, 0.5], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [12.5, 10.5, 9.5, 10], "texture": "#1"},
+				"down": {"uv": [12.5, 9, 9.5, 9.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "southHead",
+			"from": [4, 4, 15],
+			"to": [12, 12, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"east": {"uv": [5, 9.5, 9, 10], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [0, 4.5, 4, 8.5], "texture": "#1"},
+				"west": {"uv": [8, 6, 12, 6.5], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [13.5, 7.5, 9.5, 7], "texture": "#1"},
+				"down": {"uv": [12, 5, 8, 5.5], "texture": "#1"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "Pipes",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [
+				{
+					"name": "South",
+					"origin": [0, 0, 0],
+					"color": 0,
+					"children": [0, 1, 2]
+				}
+			]
+		}
+	]
+}

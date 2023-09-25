@@ -55,7 +55,8 @@ public class BatteryBakedModel implements IDynamicBakedModel {
             return Collections.EMPTY_LIST;
         }
         int[] inputStatus = extraData.get(BatteryBlockEntity.FACES_INPUT_STATUS);
-        return FACE_QUAD_CACHE.get(side).get(inputStatus[side.get3DDataValue()]);
+        if(inputStatus == null) return Collections.EMPTY_LIST;
+        else return FACE_QUAD_CACHE.get(side).get(inputStatus[side.get3DDataValue()]);
 
     }
 
