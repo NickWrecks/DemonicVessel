@@ -2,20 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "E": {
+      "item": "demonicvessel:energy_module"
+    },
     "I": {
       "item": "minecraft:iron_ingot"
     },
     "J": {
       "item": "demonicvessel:abbadonium_jacket"
-    },
-    "R": {
-      "item": "minecraft:redstone_block"
     }
   },
   "pattern": [
-    "I I",
-    "IRI",
-    " J "
+    "IAI",
+    "IJI",
+    "AEA"
   ],
   "result": {
     "item": "demonicvessel:famished_generator_item"

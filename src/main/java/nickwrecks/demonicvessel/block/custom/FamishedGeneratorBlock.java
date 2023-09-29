@@ -3,6 +3,8 @@ package nickwrecks.demonicvessel.block.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -102,6 +104,7 @@ public class FamishedGeneratorBlock extends BaseEntityBlock {
                         famishedGen.collecting = !famishedGen.collecting;
                         famishedGen.setChanged();
                         pLevel.sendBlockUpdated(pPos, pState, pState, Block.UPDATE_ALL);
+                        pLevel.playSound(null,pPos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 0.5f,0.7f);
                     } else {
                         MenuProvider menuProvider = new MenuProvider() {
                         @Override

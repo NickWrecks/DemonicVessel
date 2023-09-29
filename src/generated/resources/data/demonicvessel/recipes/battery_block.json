@@ -2,20 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "G": {
-      "item": "minecraft:gold_ingot"
+    "A": {
+      "item": "minecraft:amethyst_shard"
     },
-    "J": {
-      "item": "demonicvessel:abbadonium_jacket"
+    "B": {
+      "item": "minecraft:polished_blackstone_bricks"
     },
-    "R": {
-      "item": "minecraft:redstone_block"
+    "E": {
+      "item": "demonicvessel:energy_module"
     }
   },
   "pattern": [
-    " G ",
-    "GRG",
-    " J "
+    "BAB",
+    "AEA",
+    "BAB"
   ],
   "result": {
     "item": "demonicvessel:battery_block"

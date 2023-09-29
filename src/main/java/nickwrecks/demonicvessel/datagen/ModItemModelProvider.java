@@ -21,6 +21,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                 withExistingParent(ModItems.BATTERY_BLOCK_ITEM.getId().getPath(), modLoc("block/battery_block"));
                 withExistingParent(ModItems.CABLE_ITEM.getId().getPath(), modLoc("block/cable"));
                 cubeAll(ModItems.ABBADONIUM_JACKET.getId().getPath(), modLoc("item/abbadonium_jacket"));
+                cubeAll(ModItems.ENERGY_MODULE.getId().getPath(), modLoc("item/energy_module"));
                 simpleItem(ModItems.ABBADONIUM_INGOT);
                 withExistingParent(ModItems.ABBADONIUM_BLOCK.getId().getPath(),modLoc("block/abbadonium_block"));
                 simpleItem(ModItems.EMPTY_SOUL_SYRINGE);

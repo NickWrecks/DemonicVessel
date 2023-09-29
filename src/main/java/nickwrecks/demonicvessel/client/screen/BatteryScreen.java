@@ -2,8 +2,8 @@ package nickwrecks.demonicvessel.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -39,21 +39,19 @@ public class BatteryScreen extends AbstractContainerScreen<BatteryMenu> {
 
     private static final ResourceLocation CONFIGURATION = new ResourceLocation(DemonicVessel.MODID, "textures/gui/configuration.png");
     private static final ResourceLocation CONFIGURATION_CLOSED = new ResourceLocation(DemonicVessel.MODID, "textures/gui/configuration_closed.png");
-    private static InformationTab informationTab;
-    private String info = new String("This battery is capable of storing up to " + BatteryBlockEntity.BATTERY_CAPACITY + " units of RDE. The input and output of energy on any given side can be configured via the panel on the left.");
+
+    private String info = "This battery is capable of storing up to " + BatteryBlockEntity.BATTERY_CAPACITY + " units of RDE. The input and output of energy on any given side can be configured via the panel on the left.";
     public int[] config = {0,0,0,0,0,0};
     @Override
     protected void init() {
         super.init();
-        informationTab = new InformationTab(info,leftPos,topPos,imageWidth);
-        addRenderableWidget(informationTab.button);
-        addRenderableWidget(new ImageButton(leftPos - 15, topPos + 3, 16, 16, 84, 0, 0, CONFIGURATION, new Button.OnPress() {
-            @Override
-            public void onPress(Button pButton) {
-                if(openConfig) openConfig = false;
-                else openConfig = true;
-            }
-        }));
+        InformationTab informationTab = new InformationTab(info,leftPos,topPos,imageHeight,imageWidth,this.font);
+        addRenderableWidget(informationTab);
+        addRenderableWidget(informationTab.scrollUp);
+        addRenderableWidget(informationTab.scrollDown);
+        addRenderableWidget(new ImageButton(leftPos - 15, topPos + 3, 16, 16, 84, 0, 0, CONFIGURATION, pButton -> {
+            openConfig = !openConfig;
+        })).setTooltip(Tooltip.create(Component.literal("Configuration")));
     }
 
 
@@ -80,7 +78,6 @@ public class BatteryScreen extends AbstractContainerScreen<BatteryMenu> {
             if(configWidth > CONFIG_WIDTH_MIN) configWidth -= 8;
             if(configWidth < CONFIG_WIDTH_MIN) configWidth = CONFIG_WIDTH_MIN;
         }
-        informationTab.draw(pPoseStack);
     }
     private final static int configOffsetLeft = 49;
 
@@ -92,13 +89,6 @@ public class BatteryScreen extends AbstractContainerScreen<BatteryMenu> {
             int power = menu.getPower();
             renderTooltip(pPoseStack, Component.literal(power + "/" + BatteryBlockEntity.BATTERY_CAPACITY + " RDE"), pMouseX, pMouseY);
         }
-        if(pMouseX<leftPos && pMouseX>=leftPos-15 && pMouseY>topPos+3 && pMouseY<=topPos+19)
-            renderTooltip(pPoseStack, Component.translatable("Configuration"), pMouseX, pMouseY);
-
-        if(pMouseX>leftPos+this.imageWidth && pMouseX<=leftPos+this.imageWidth+16 && pMouseY>topPos+3 && pMouseY<=topPos+19)
-            renderTooltip(pPoseStack, Component.translatable("Information"), pMouseX, pMouseY);
-
-
         ///D-U-N-S-W-E
         if(configWidth == CONFIG_WIDTH_MAX && configHeight == CONFIG_HEIGHT_MAX) {
             RenderSystem.setShaderTexture(0, getTextureAt(2));
@@ -143,7 +133,6 @@ public class BatteryScreen extends AbstractContainerScreen<BatteryMenu> {
         if(configWidth == CONFIG_WIDTH_MAX && configHeight == CONFIG_HEIGHT_MAX) {
             this.font.draw(pPoseStack, Component.translatable("Configuration"), -84, 8, 0x000000);
         }
-        informationTab.drawInfo(pPoseStack,this.font);
     }
 
     @Override

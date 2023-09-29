@@ -20,10 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -33,11 +30,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import static nickwrecks.demonicvessel.energy.RawDemonicEnergyStorage.ENERGY_CAPABILITY;
 
 public class FamishedGeneratorBlockEntity extends BlockEntity {
+    private final Map<Direction, LazyOptional<IRawDemonicEnergyStorage>> energyCache = new EnumMap<>(Direction.class);
 
     public static final int FAMISHED_GEN_CAPACITY = 10000;
     public static final int FAMISHED_GEN_EXPERIENCE_CAPACITY = 1000;
@@ -59,6 +59,11 @@ public class FamishedGeneratorBlockEntity extends BlockEntity {
             @Override
             protected void onEnergyChanged() {
                 setChanged();
+            }
+
+            @Override
+            public boolean canReceive() {
+                return false;
             }
         };
     }
@@ -128,24 +133,28 @@ public class FamishedGeneratorBlockEntity extends BlockEntity {
                 serverLevel.sendParticles(ParticleTypes.CRIT,getBlockPos().getX(),getBlockPos().getY()+0.5f,getBlockPos().getZ(),4,getLevel().random.nextFloat()*0.7f,0,getLevel().random.nextFloat()*0.7f,0);
             }
     }
+
     private void distributeEnergy() {
-        Direction direction = Direction.DOWN;
-            if (rawDemonicEnergyStorage.getEnergyStored() <= 0) {
-                return;
+        Direction dir = Direction.DOWN;
+        LazyOptional<IRawDemonicEnergyStorage> targetCapability = energyCache.get(dir);
+        if (getLevel().getBlockEntity(getBlockPos().relative(dir)) != null) {
+            if (targetCapability == null) {
+                ICapabilityProvider provider = getLevel().getBlockEntity(getBlockPos().relative(dir));
+                targetCapability = provider.getCapability(ENERGY_CAPABILITY, dir.getOpposite());
+                energyCache.put(dir, targetCapability);
+                targetCapability.addListener(self -> energyCache.put(dir, null));
             }
-            BlockEntity be = level.getBlockEntity(getBlockPos().relative(direction));
-            if (be != null) {
-                be.getCapability(ENERGY_CAPABILITY, direction.getOpposite()).map(e -> {
-                    if (e.canReceive()) {
-                        int received = e.receiveEnergy(Math.min(rawDemonicEnergyStorage.getEnergyStored(), 100), false);
-                        rawDemonicEnergyStorage.extractEnergy(received, false);
-                        setChanged();
-                        return received;
-                    }
-                    return 0;
-                });
-            }
+            targetCapability.ifPresent(storage -> {
+                if (rawDemonicEnergyStorage.getEnergyStored() <= 0) return;
+                if (storage.canReceive()) {
+                    int received = storage.receiveEnergy(Math.min(rawDemonicEnergyStorage.getEnergyStored(), 100), false);
+                    rawDemonicEnergyStorage.extractEnergy(received, false);
+                    setChanged();
+                }
+            });
+
         }
+    }
     private void collectExp() {
 
         List<Player> playerList = this.getLevel().getEntitiesOfClass(Player.class, AABB.ofSize(Vec3.atCenterOf(new BlockPos(getBlockPos().getX(),getBlockPos().getY(),getBlockPos().getZ())),3f,3f,3f));

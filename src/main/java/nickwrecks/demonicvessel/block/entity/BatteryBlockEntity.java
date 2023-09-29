@@ -10,12 +10,11 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState     ;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import nickwrecks.demonicvessel.block.BlockTools;
 import nickwrecks.demonicvessel.energy.IRawDemonicEnergyStorage;
@@ -23,7 +22,8 @@ import nickwrecks.demonicvessel.energy.RawDemonicEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-
+import java.util.EnumMap;
+import java.util.Map;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 import static nickwrecks.demonicvessel.block.entity.ModBlockEntities.BATTERY_BLOCK_ENTITY;
@@ -31,6 +31,7 @@ import static nickwrecks.demonicvessel.energy.RawDemonicEnergyStorage.ENERGY_CAP
 
 public class BatteryBlockEntity extends BlockEntity {
 
+    private final Map<Direction, LazyOptional<IRawDemonicEnergyStorage>> energyCache = new EnumMap<>(Direction.class);
 
     public static final int BATTERY_CAPACITY = 100000;
     public Direction facing;
@@ -54,12 +55,34 @@ public class BatteryBlockEntity extends BlockEntity {
     public static final ModelProperty<int[]> FACES_INPUT_STATUS = new ModelProperty<>();
 
     private final RawDemonicEnergyStorage rawDemonicEnergyStorage = createEnergy();
+    private final RawDemonicEnergyStorage outputEnergyStorage = new RawDemonicEnergyStorage(BATTERY_CAPACITY,100) {
+        @Override
+        public boolean canReceive() {
+            return false;
+        }
+
+    };
+    private final RawDemonicEnergyStorage viewOnlyEnergyStorage = new RawDemonicEnergyStorage(BATTERY_CAPACITY,100) {
+        @Override
+        public boolean canReceive() {
+            return false;
+        }
+
+        @Override
+        public boolean canExtract() {
+            return false;
+        }
+    };
     private final LazyOptional<IRawDemonicEnergyStorage> rawDemonicEnergy = LazyOptional.of(() -> rawDemonicEnergyStorage);
 
+    private final LazyOptional<IRawDemonicEnergyStorage> outputDemonicEnergy = LazyOptional.of(() -> outputEnergyStorage);
+
+    private final LazyOptional<IRawDemonicEnergyStorage> viewOnlyDemonicEnergy = LazyOptional.of(() -> viewOnlyEnergyStorage);
 
 
 
-    private RawDemonicEnergyStorage createEnergy() {
+
+private RawDemonicEnergyStorage createEnergy() {
         return new RawDemonicEnergyStorage(BATTERY_CAPACITY, 100) {
             @Override
             protected void onEnergyChanged() {
@@ -71,6 +94,8 @@ public class BatteryBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("Energy", rawDemonicEnergyStorage.serializeNBT());
+        pTag.put("OutputEnergy", outputEnergyStorage.serializeNBT());
+        pTag.put("ViewEnergy",viewOnlyEnergyStorage.serializeNBT());
         saveClientData(pTag);
 
         super.saveAdditional(pTag);
@@ -81,31 +106,41 @@ public class BatteryBlockEntity extends BlockEntity {
         super.load(pTag);
         if (pTag.contains("Energy"))
             rawDemonicEnergyStorage.deserializeNBT(pTag.get("Energy"));
+        if(pTag.contains("OutputEnergy"))
+            outputEnergyStorage.deserializeNBT(pTag.get("OutputEnergy"));
+        if(pTag.contains("ViewEnergy"))
+            viewOnlyEnergyStorage.deserializeNBT(pTag.get("ViewEnergy"));
         loadClientData(pTag);
     }
 
     public void tick() {
-            distributeEnergy();
+        outputEnergyStorage.setEnergy(rawDemonicEnergyStorage.getEnergyStored());
+        viewOnlyEnergyStorage.setEnergy(rawDemonicEnergyStorage.getEnergyStored());
+        distributeEnergy();
+        rawDemonicEnergyStorage.setEnergy(outputEnergyStorage.getEnergyStored());
+        viewOnlyEnergyStorage.setEnergy(rawDemonicEnergyStorage.getEnergyStored());
     }
 
 
 
 
     private void distributeEnergy() {
-        for (Direction direction : Direction.values()) {
-            if (rawDemonicEnergyStorage.getEnergyStored() <= 0) {
-                return;
-            }
-            BlockEntity be = level.getBlockEntity(getBlockPos().relative(direction));
-            if (be != null  && (inputStatus[direction.get3DDataValue()]==2 || inputStatus[direction.get3DDataValue()]==3)) {
-                be.getCapability(ENERGY_CAPABILITY,direction.getOpposite()).map(e -> {
-                    if (e.canReceive()) {
-                        int received = e.receiveEnergy(Math.min(rawDemonicEnergyStorage.getEnergyStored(), 100), false);
-                        rawDemonicEnergyStorage.extractEnergy(received, false);
+        for (Direction dir : Direction.values()) {
+            if (getLevel().getBlockEntity(getBlockPos().relative(dir)) != null && (inputStatus[dir.get3DDataValue()] == 2 || inputStatus[dir.get3DDataValue()] == 3)) {
+                LazyOptional<IRawDemonicEnergyStorage> targetCapability = energyCache.get(dir);
+                if (targetCapability == null) {
+                    ICapabilityProvider provider = getLevel().getBlockEntity(getBlockPos().relative(dir));
+                    targetCapability = provider.getCapability(ENERGY_CAPABILITY, dir.getOpposite());
+                    energyCache.put(dir, targetCapability);
+                    targetCapability.addListener(self -> energyCache.put(dir, null));
+                }
+                targetCapability.ifPresent(storage -> {
+                    if (outputEnergyStorage.getEnergyStored() <= 0) return;
+                    if (storage.canReceive()) {
+                        int received = storage.receiveEnergy(Math.min(outputEnergyStorage.getEnergyStored(), 100), false);
+                        outputEnergyStorage.extractEnergy(received, false);
                         setChanged();
-                        return received;
                     }
-                    return 0;
                 });
             }
         }
@@ -122,9 +157,11 @@ public class BatteryBlockEntity extends BlockEntity {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ENERGY_CAPABILITY) {
-            if(side == null)  return super.getCapability(cap, side);
+            if(side == null)  return viewOnlyDemonicEnergy.cast();
             else if (inputStatus[side.get3DDataValue()] == 1 || inputStatus[side.get3DDataValue()]==3)
                 return rawDemonicEnergy.cast();
+            else if(inputStatus[side.get3DDataValue()] == 2)
+                return outputDemonicEnergy.cast();
         }
 
         return super.getCapability(cap, side);

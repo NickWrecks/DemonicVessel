@@ -1,4 +1,4 @@
-// 1.19.4	2023-09-24T21:58:22.688059799	Block States: demonicvessel
+// 1.19.4	2023-09-29T16:57:38.465276989	Block States: demonicvessel
 ab82c22cdaaa24382ebf6878fa89ff765a36efcb assets/demonicvessel/blockstates/abbadonium_block.json
 63f9c0e9e603d7c9d7a06b9d65d63ad38f282214 assets/demonicvessel/blockstates/battery_block.json
 4b007c9ba8901c9a578b2816c282d15dbbf10224 assets/demonicvessel/blockstates/cable.json
@@ -7,5 +7,5 @@ ab82c22cdaaa24382ebf6878fa89ff765a36efcb assets/demonicvessel/blockstates/abbado
 ec48fedeb5623c7ff6107585bf510493ac1cf0b6 assets/demonicvessel/blockstates/famished_generator_block.json
 a06326e3404ca0bbd94640b506a28e8ce99a92b3 assets/demonicvessel/models/block/abbadonium_block.json
 14ba52ee36290b9336237f6989f28ea3075bcb7a assets/demonicvessel/models/block/battery_block.json
-782211765c128b431dbf0a31a51036cacc67eeae assets/demonicvessel/models/block/cable.json
+1348373b55246ec7ac954a9e4ccb7ccfd2fa9bb2 assets/demonicvessel/models/block/cable.json
 e462e03911c63cb7123fb6f807226e7340110159 assets/demonicvessel/models/block/creative_generator_block.json

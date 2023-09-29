@@ -41,6 +41,8 @@ public class BatteryConfigToServer {
                 blockEntity.requestModelDataUpdate();
                 blockEntity.setChanged();
                 context.getSender().getLevel().sendBlockUpdated(pos, blockEntity.getBlockState(),blockEntity.getBlockState(), Block.UPDATE_ALL);
+                context.getSender().getLevel().getBlockState(pos).updateNeighbourShapes(context.getSender().getLevel(), pos,2);
+               
             }
         });
         return true;

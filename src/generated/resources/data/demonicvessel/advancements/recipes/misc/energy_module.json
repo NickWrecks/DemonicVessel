@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_abbadonium_jacket": {
+    "has_abbadonium_gear": {
       "conditions": {
         "items": [
           {
             "items": [
-              "demonicvessel:energy_module"
+              "minecraft:gold_ingot"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "demonicvessel:battery_block"
+        "recipe": "demonicvessel:energy_module"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_abbadonium_jacket",
+      "has_abbadonium_gear",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "demonicvessel:battery_block"
+      "demonicvessel:energy_module"
     ]
   }
 }

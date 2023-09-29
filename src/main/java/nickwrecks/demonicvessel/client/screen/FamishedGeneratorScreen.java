@@ -8,10 +8,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import nickwrecks.demonicvessel.DemonicVessel;
-import nickwrecks.demonicvessel.block.entity.BatteryBlockEntity;
 import nickwrecks.demonicvessel.block.entity.FamishedGeneratorBlockEntity;
 import nickwrecks.demonicvessel.client.screen.components.InformationTab;
-import nickwrecks.demonicvessel.item.ModItems;
 
 import java.util.Optional;
 
@@ -28,15 +26,15 @@ public class FamishedGeneratorScreen extends AbstractContainerScreen<FamishedGen
     private static final int EXPERIENCE_TOP = 22;
     private static final int EXPERIENCE_LEFT = 44;
     private static final int EXPERIENCE_WIDTH = 16;
-    private static InformationTab informationTab;
     private static final ResourceLocation GUI = new ResourceLocation(DemonicVessel.MODID, "textures/gui/famished_generator_base.png");
 
-    private String info = new String("Turns EXP into RDE. Requires an Experience Gem to draw in experience from players. If left starving, will eat the gem. Produces 10 RDE for every unit of experience drawn in. A Distillation Feeder is recommended.");
+    private String info = "Turns EXP into RDE. Requires an Experience Gem to draw in experience from players. If left starving, will eat the gem. \n Crouch+Right Click to switch EXP collection on and off. \n A Distillation Feeder is recommended.";
     @Override
     protected void init() {
-        super.init();
-        informationTab = new InformationTab(info,leftPos,topPos,imageWidth);
-        addRenderableWidget(informationTab.button);
+        super.init(); InformationTab informationTab = new InformationTab(info,leftPos,topPos,imageHeight,imageWidth,this.font);
+        addRenderableWidget(informationTab);
+        addRenderableWidget(informationTab.scrollUp);
+        addRenderableWidget(informationTab.scrollDown);
     }
 
     @Override
@@ -63,7 +61,6 @@ public class FamishedGeneratorScreen extends AbstractContainerScreen<FamishedGen
         if(hunger%2!=0) {
             blit(pPoseStack,leftPos+126-(hunger/2)*9,topPos+62,187,3,7,7);
         }
-        informationTab.draw(pPoseStack);
     }
 
     @Override
@@ -83,7 +80,6 @@ public class FamishedGeneratorScreen extends AbstractContainerScreen<FamishedGen
     protected void renderLabels(PoseStack pPoseStack, int pMouseX, int pMouseY) {
         super.renderLabels(pPoseStack, pMouseX, pMouseY);
         pPoseStack.scale(0.9f,0.9f,1.0f);
-        informationTab.drawInfo(pPoseStack,this.font);
     }
 
     @Override

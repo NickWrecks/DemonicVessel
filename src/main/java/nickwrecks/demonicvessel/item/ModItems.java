@@ -30,6 +30,8 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ABBADONIUM_JACKET = ITEMS.register("abbadonium_jacket",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ENERGY_MODULE = ITEMS.register("energy_module",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ABBADONIUM_BLOCK = ITEMS.register("abbadonium_block",
             ()-> new BlockItem(ModBlocks.ABBADONIUM_BLOCK.get(), new Item.Properties()));
 

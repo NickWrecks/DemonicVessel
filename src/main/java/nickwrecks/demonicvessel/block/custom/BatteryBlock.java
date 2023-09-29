@@ -33,7 +33,8 @@ import nickwrecks.demonicvessel.block.entity.BatteryBlockEntity;
 import nickwrecks.demonicvessel.client.screen.BatteryMenu;
 import nickwrecks.demonicvessel.network.BatteryConfigToClient;
 import nickwrecks.demonicvessel.network.Channel;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 
 public class BatteryBlock extends BaseEntityBlock {

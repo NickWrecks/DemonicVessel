@@ -1,7 +1,4 @@
 {
   "parent": "minecraft:block/cube",
-  "loader": "demonicvessel:cable_loader",
-  "transform": {
-    "origin": "corner"
-  }
+  "loader": "demonicvessel:cable_loader"
 }

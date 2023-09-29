@@ -4,9 +4,6 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Transformation;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
@@ -22,10 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.BakedModelWrapper;
 import net.minecraftforge.client.model.IDynamicBakedModel;
-import net.minecraftforge.client.model.IQuadTransformer;
-import net.minecraftforge.client.model.QuadTransformers;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import net.minecraftforge.client.model.geometry.IGeometryLoader;
@@ -33,10 +27,8 @@ import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 import nickwrecks.demonicvessel.DemonicVessel;
 import nickwrecks.demonicvessel.block.custom.CableBlock;
 import nickwrecks.demonicvessel.block.custom.ConnectorType;
-import nickwrecks.demonicvessel.block.entity.BatteryBlockEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 import java.util.*;
 import java.util.function.Function;
@@ -68,8 +60,6 @@ public class CableModelLoader implements IGeometryLoader<CableModelLoader.CableM
         private final Map<Direction, List<BakedQuad>> ITEM_QUAD_CACHE = new EnumMap<>(Direction.class);
 
         private final ItemTransforms itemTransforms;
-        private Transformation shiftToCenter = new Transformation(new Vector3f(0.5f),null,null,null);
-        private IQuadTransformer quadTransformers = QuadTransformers.applying(shiftToCenter);
         public CableModel(ModelState modelState,Function<Material, TextureAtlasSprite> spriteGetter, ItemTransforms itemTransforms) {
             this.spriteGetter =spriteGetter;
             this.itemTransforms = itemTransforms;
@@ -90,7 +80,6 @@ public class CableModelLoader implements IGeometryLoader<CableModelLoader.CableM
                     connectorTypes[5] = state.getValue(CableBlock.EAST);
                     for (int i = 0; i <= 5; i++) {
                         quads.addAll(FACE_QUAD_CACHE.get(Direction.from3DDataValue(i)).get(connectorTypes[i]).get().getQuads(null,null,RANDOM,ModelData.EMPTY,null));
-                        quadTransformers.process(quads);
                     }
                 }
             }

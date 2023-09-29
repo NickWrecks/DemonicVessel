@@ -26,6 +26,7 @@ public class ModLanguageProvider extends LanguageProvider{
         add(ModItems.LESSER_DEMON_SPAWN_EGG.get(), "Lesser Demon Spawn Egg");
         add(ModItems.ABBADONIUM_GEAR.get(),"Abbadonium Gear");
         add(ModItems.ABBADONIUM_JACKET.get(), "Abbadonium Casing");
+        add(ModItems.ENERGY_MODULE.get(), "Energy Module");
         add(ModBlocks.FAMISHED_GENERATOR_BLOCK.get(),"Famished Generator");
         add("demonicvessel.screen.famishedgen","Famished Generator");
         add(ModItems.EXPERIENCE_GEM.get(),"Experience Gem");

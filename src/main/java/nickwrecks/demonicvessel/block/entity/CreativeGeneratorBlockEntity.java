@@ -5,14 +5,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import nickwrecks.demonicvessel.energy.IRawDemonicEnergyStorage;
 import nickwrecks.demonicvessel.energy.RawDemonicEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.EnumMap;
+import java.util.Map;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
 import static nickwrecks.demonicvessel.energy.RawDemonicEnergyStorage.ENERGY_CAPABILITY;
@@ -23,6 +23,7 @@ public class CreativeGeneratorBlockEntity extends BlockEntity{
 
     protected Direction facing;
 
+    private final Map<Direction, LazyOptional<IRawDemonicEnergyStorage>> energyCache = new EnumMap<>(Direction.class);
     private final RawDemonicEnergyStorage energyStorage = createEnergy();
     private final LazyOptional<IRawDemonicEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
@@ -36,6 +37,11 @@ public class CreativeGeneratorBlockEntity extends BlockEntity{
             protected void onEnergyChanged() {
                 setChanged();
             }
+
+            @Override
+            public boolean canReceive() {
+                return false;
+            }
         };
     }
 
@@ -46,34 +52,30 @@ public class CreativeGeneratorBlockEntity extends BlockEntity{
     }
     public void tickServer() {
         energyStorage.addEnergy(100);
-        sendOutPower();
+        distributeEnergy();
     }
 
-    private void sendOutPower() {
-        AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());
-        if (capacity.get() > 0) {
 
-                BlockEntity be = level.getBlockEntity(worldPosition.relative(facing));
-                if (be != null) {
-                    boolean doContinue = be.getCapability(ENERGY_CAPABILITY, facing.getOpposite()).map(handler -> {
-                                if (handler.canReceive()) {
-                                    int received = handler.receiveEnergy(Math.min(capacity.get(), 100), false);
-                                    capacity.addAndGet(-received);
-                                    energyStorage.consumeEnergy(received);
-                                    setChanged();
-                                    return capacity.get() > 0;
-                                } else {
-                                    return true;
-                                }
-                            }
-                    ).orElse(true);
-                    if (!doContinue) {
-                        return;
-                    }
+    private void distributeEnergy() {
+        Direction dir  = facing;
+        LazyOptional<IRawDemonicEnergyStorage> targetCapability = energyCache.get(dir);
+        if(getLevel().getBlockEntity(getBlockPos().relative(dir)) != null) {
+            if (targetCapability == null) {
+                ICapabilityProvider provider = getLevel().getBlockEntity(getBlockPos().relative(dir));
+                targetCapability = provider.getCapability(ENERGY_CAPABILITY, dir.getOpposite());
+                energyCache.put(dir, targetCapability);
+                targetCapability.addListener(self -> energyCache.put(dir, null));
+            }
+            targetCapability.ifPresent(storage -> {
+                if (energyStorage.getEnergyStored() <= 0) return;
+                if (storage.canReceive()) {
+                    int received = storage.receiveEnergy(Math.min(energyStorage.getEnergyStored(), 100), false);
+                    energyStorage.extractEnergy(received, false);
+                    setChanged();
                 }
+            });
         }
     }
-
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
 
